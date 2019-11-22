@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projecte_visual/Layout/Add_Group/Add_Group.dart';
 import 'package:projecte_visual/Layout/Profile/Profile.dart';
 
 class Main_PopupMenu extends StatelessWidget {
@@ -33,7 +34,7 @@ class Main_PopupMenu extends StatelessWidget {
           switch (value) {
             case 'Afegir':
               {
-                print('Afegir');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add_Group()));
               }
               break;
             case 'Eliminar':

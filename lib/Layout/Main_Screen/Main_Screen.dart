@@ -15,10 +15,11 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text('RoomShare'),
         actions: <Widget>[
-          //Widget para el desplegable
+          //Widget para el desplegable add_group, Delete_group and profile
           Main_PopupMenu(),
         ],
       ),
+      //Codigo para la visualizacion del calendario acual
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.calendar_today),
         onPressed: () {
