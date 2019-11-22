@@ -21,20 +21,22 @@ class Profile_Screen extends StatelessWidget {
                 Text('#DataName'),
               ],
             ),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('User State'),
-                SizedBox(height: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                SizedBox(width: 42),
+                Column(
                   children: <Widget>[
+                    Text('User State'),
                     SizedBox(width: 30),
                     Text('#DataState'),
                     SizedBox(width: 10),
-                    IconButton(icon: Icon(Icons.edit),onPressed: (){},)
                   ],
                 ),
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {},
+                )
               ],
             ),
             Column(
