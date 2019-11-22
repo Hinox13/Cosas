@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:projecte_visual/Layout/Profile/Profile.dart';
 
 class Main_PopupMenu extends StatelessWidget {
   const Main_PopupMenu({
@@ -17,15 +17,15 @@ class Main_PopupMenu extends StatelessWidget {
         itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'Afegir',
-                child: Text("Afegir grup"),
+                child: Text("Add group"),
               ),
               PopupMenuItem(
                 value: 'Eliminar',
-                child: Text("Eliminar grup"),
+                child: Text("Delete group"),
               ),
               PopupMenuItem(
                 value: 'Perfil',
-                child: Text("Perfil"),
+                child: Text("Profile"),
               ),
             ],
         //Creacion de que hacer con el valor obtenido
@@ -43,7 +43,7 @@ class Main_PopupMenu extends StatelessWidget {
               break;
             case 'Perfil':
               {
-                print('Perfil');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile_Screen()));
               }
               break;
             default:

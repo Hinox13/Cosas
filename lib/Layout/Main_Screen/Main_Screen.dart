@@ -22,7 +22,6 @@ class _MainScreenState extends State<MainScreen> {
         child: Icon(Icons.calendar_today),
         onPressed: () {},
       ),
-      body: Icon(Icons.camera),
     );
   }
 }
