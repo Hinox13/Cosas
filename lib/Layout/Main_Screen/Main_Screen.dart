@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
+import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -20,7 +21,13 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.calendar_today),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => User_Calendar(),
+            )
+          );
+        },
       ),
     );
   }
