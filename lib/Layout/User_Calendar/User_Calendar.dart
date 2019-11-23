@@ -7,6 +7,8 @@ OJOOOO => perque no ho farem aixi?, es lleugerament diferent un scaffold de lalt
 action button per afegir events i el actualment mostrat nomes serveix per visualitzar.
 */
 import 'package:flutter/material.dart';
+import 'package:projecte_visual/Layout/Class/Models.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class User_Calendar extends StatefulWidget {
   @override
@@ -14,6 +16,23 @@ class User_Calendar extends StatefulWidget {
 }
 
 class _User_CalendarState extends State<User_Calendar> {
+
+  Asset asset;
+  _User_CalendarState(this.asset);
+
+  CalendarController  _calendarController;
+  @override
+  void initState() {
+    _calendarController = CalendarController();
+    super.initState();
+  }
+
+  @override
+void dispose() {
+  _calendarController.dispose();
+  super.dispose();
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +43,22 @@ class _User_CalendarState extends State<User_Calendar> {
         child: Container(
           width: 350,
           height: 500,
-          child: Placeholder(),
+          child: TableCalendar(
+            calendarController: _calendarController,
+            calendarStyle: CalendarStyle(
+              todayColor: Colors.deepPurple,
+              selectedColor: Colors.pink,
+              
+            ),
+            onDaySelected: (date, events) {                
+              print('$date, $events');                     //funció que al clicar el calendari ens permet saber l'event i dia
+            }
+          
+          ),
         ),
       ),
     );
   }
 }
+
+

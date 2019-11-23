@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Text('Soy un grupo de prueba, clickame o zi mama mio'),
         ),
         onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Layout()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Layout(lasset[index])));
         },
       ),
     );
