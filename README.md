@@ -1,6 +1,6 @@
 # projecte_visual
 
-A new Flutter project.
+Programación de una App para gestión de tiempo aplicable a cualquier uso quatidiano.
 
 ## Getting Started
 
