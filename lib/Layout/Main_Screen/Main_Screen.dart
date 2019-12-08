@@ -3,6 +3,7 @@ import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
 import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 
+
 class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -38,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Text('Soy un grupo de prueba, clickame o zi mama mio'),
         ),
         onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Layout(lasset[index])));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Layout()));
         },
       ),
     );

@@ -76,7 +76,7 @@ class _Group_LayoutState extends State<Group_Layout> {
             ),
           ).then((value) {                                
             setState(() {                                 
-                lassets.add(Assets(value));
+                lassets.add(Asset(value));
               
             });
           });
@@ -102,7 +102,7 @@ class _Group_LayoutState extends State<Group_Layout> {
                          ),       
                   onTap:  () {
                       Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => User_Calendar()));
+              .push(MaterialPageRoute(builder: (context) => User_Calendar(), settings: RouteSettings(arguments: lassets[index])));
                   }
                   ),
           ),
