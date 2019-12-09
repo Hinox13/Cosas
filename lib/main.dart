@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
-import 'package:projecte_visual/Layout/Class/Models.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,7 +11,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: MainScreen(),
     );
   }
 }
