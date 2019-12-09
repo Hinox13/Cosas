@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
@@ -13,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('RoomShare'),
+        title: Text('Comparte.me'),
         actions: <Widget>[
           //Widget para el desplegable add_group, Delete_group and profile
           Main_PopupMenu(),
@@ -31,14 +32,22 @@ class _MainScreenState extends State<MainScreen> {
           ));
         },
       ),
-      body: InkWell(
-        child: Container(
-          height: 200,
-          color: Colors.green,
-          child: Text('Soy un grupo de prueba, clickame o zi mama mio'),
-        ),
-        onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Layout()));
+      body: StreamBuilder(
+        stream: Firestore.instance.collection('users').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if(!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<DocumentSnapshot> docs = snapshot.data.documents;
+          return ListView.builder(
+            itemCount: docs.length,
+            itemBuilder: (context,index){
+              Map<String, dynamic> data = docs[index].data;
+              return ListTile(
+                title: Text(data['Name']),
+              );
+            },
+          );
         },
       ),
     );
