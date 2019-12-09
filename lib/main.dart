@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,8 +11,9 @@ class MyApp extends StatelessWidget {
       title: 'RoomShare',
       color: Colors.white,
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.orange
       ),
+      home: MainScreen(),
     );
   }
 }
