@@ -1,37 +1,30 @@
 class User {
- String name, state;
- final dynamic id;
+ String id, name, status;
 
- User(this.name, this.state, this.id)
+ User(this.id, this.name, this.status)
 ;
 
 }
 
 class Asset {
  String name;
- List<Event> event_list;                //Cada Asset tindrà una llista amb les diferents reserves (Events)
 
- Asset(this.name, this.event_list);
+ Asset(this.name);
 }
 
 class Event {
- final dynamic user_id;                 //Per saber quin usuari l'ha creat
- final dynamic asset_id;                //Per saber quin quin tipus d'asset s'ha reservat
- var init_date, end_date;               //Temps d'inici i finalització
- bool visible;                          //Per quan fem el calendari personal que filtri els events i es mostrin les reserves del usuari
+ String userid;
+ DateTime init, end;
  
- Event(this.user_id, this.asset_id ,this.init_date, this.end_date): this.visible=false;
+ Event(this.userid, this.init, this.end);
  
 }
 
 class Group {
 
- String name,admin;                     //nom del grup i del administrador (User.name)
- final dynamic id;            
+ String name,admin,id;  
  List<User> user_list;
- List<Asset> asset_list;
- 
 
- Group(this.name, this.admin, this.id, this.user_list, this.asset_list);
+ Group(this.name, this.admin, this.id, this.user_list);
 
 }
