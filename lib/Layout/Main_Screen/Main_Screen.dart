@@ -39,15 +39,8 @@ class _MainScreenState extends State<MainScreen> {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
-          return ListView.builder(
-            itemCount: docs.length,
-            itemBuilder: (context,index){
-              Map<String, dynamic> data = docs[index].data;
-              return ListTile(
-                title: Text(data['Name']),
-              );
-            },
-          );
+          Map<String, dynamic> data = docs[0].data;
+          return Text('${docs[0].data['Name']}');
         },
       ),
     );

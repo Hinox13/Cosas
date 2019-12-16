@@ -1,20 +1,9 @@
-/*
-Tal i com esta plantejat actualment, aqui seria un calendari nomes per visualitzar les reserves del propi usuari,
-pero si per base de dades fem arribar totes les reserves podem automatitzarho i aprofitar l'estructura per
-reserva de grups, on passem com a parametres les reserves d'un individu o be un pupurri de reserves
-OJOOOO => perque no ho farem aixi?, es lleugerament diferent un scaffold de laltre ja que un e un floating 
-action button per afegir events i el actualment mostrat nomes serveix per visualitzar.
-*/
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:projecte_visual/Layout/User_Calendar/AddEvent.dart';
-import 'package:projecte_visual/Layout/User_Calendar/DaysFromNow.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-//
 
 class User_Calendar extends StatefulWidget {
   @override
@@ -22,25 +11,28 @@ class User_Calendar extends StatefulWidget {
 }
 
 class _User_CalendarState extends State<User_Calendar> {
-  int daysFromNow;
-
   CalendarController _calendarController;
-  @override
   Map<DateTime, List> _events;
 
-  List selectedEvents;
+  /*addEvent(DateTime date, String name) {
+    if (_events.containsKey(date)) {
+      _events[date].add(name);
+    } else {
+      _events[date] = [name];
+    }
+  }*/
+
 
   void initState() {
-    /* Firestore.instance.collection('event').snapshots();
-    AsyncSnapshot<QuerySnapshot> snapshot;
-    List<DocumentSnapshot> docs = snapshot.data.documents;
-    Map<String, dynamic> data = docs[0].data;*/
-    final _selectedDay = DateTime.now();
-    /*_events[datetime1].add()
-    _events.update(_selectedDay.subtract(Duration(days: 2)),(existingValue) =>  , ifAbsent: () => 'Elite 3',
-);*/
+    final _selectedDay = today();
+
     _events = {
-      _selectedDay.subtract(Duration(days: 2)): ['Event A1'],
+      _selectedDay.subtract(Duration(days: 30)): [
+        'Event 1422432432',
+        'Event B0',
+        'Event C0'
+      ],
+      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
       _selectedDay.subtract(Duration(days: 20)): [
         'Event A2',
         'Event B2',
@@ -88,7 +80,6 @@ class _User_CalendarState extends State<User_Calendar> {
       ],
     };
 
-    selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
     super.initState();
   }
@@ -99,101 +90,29 @@ class _User_CalendarState extends State<User_Calendar> {
     super.dispose();
   }
 
-  Widget buildEventList() {
-    return ListView(
-      children: selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
-    );
-  }
-
-  FutureOr inReserve() {
-    DateTime initTime;
-    DateTime finishTime;
-
-    return showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (context) => AlertDialog(
-          titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          title: Text('Reserve'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text('Start Time', style: TextStyle(color: Colors.grey)),
-              TimePickerSpinner(
-                //TimePickerSpinner per introduir l'hora d'inici
-                normalTextStyle: TextStyle(
-                  fontSize: 12,
-                ),
-                highlightedTextStyle: TextStyle(
-                  fontSize: 20,
-                ),
-                itemHeight: 30,
-                is24HourMode: true,
-                isShowSeconds: true,
-                onTimeChange: (time) {
-                  initTime = time;
-                  print(
-                      initTime); //La variable time conté la hora d'inici en tipus DateTime
-                },
-              ),
-              SizedBox(height: 30),
-              Text('Finish Time', style: TextStyle(color: Colors.grey)),
-              TimePickerSpinner(
-                //TimePickerSpinner per introduir l'hora final
-                normalTextStyle: TextStyle(
-                  fontSize: 12,
-                ),
-                highlightedTextStyle: TextStyle(
-                  fontSize: 20,
-                ),
-                itemHeight: 30,
-                is24HourMode: true,
-                isShowSeconds: true,
-                onTimeChange: (time2) {
-                  finishTime = time2;
-                  print(
-                      finishTime); //La variable time conté la hora final en tipus DateTime
-                },
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Reserve'),
-              onPressed: () {
-                List<DateTime> t = [initTime, finishTime];
-                Navigator.of(context).pop(t);
-              },
-            ),
-            FlatButton(
-              child: Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ]),
-    ).then((time) {
-      if (time != null)
-        print(
-            time); //FIREBASE: Aquí és on farem guardar el nou event a la llista d'events del asset seleccionat si no s'ha cancelat la reserva
-    }); //el valor time es una taula time=[init_time, finish_time];El event es guardarà amb tots els seus camps necessaris
-  }
-
   @override
   Widget build(BuildContext context) {
+    List _selectedEvents = _events[today()] ?? [];
+
+    Widget buildEventList() {
+      return ListView(
+        children: _selectedEvents
+            .map((event) => Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.8),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 4.0),
+                  child: ListTile(
+                    title: Text(event.toString()),
+                    onTap: () => print('$event tapped!'),
+                  ),
+                ))
+            .toList(),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Reserve Calendar'),
@@ -207,15 +126,9 @@ class _User_CalendarState extends State<User_Calendar> {
             selectedColor: Colors.pink,
           ),
           onDaySelected: (date, events) {
-            Firestore.instance.collection('event').snapshots();
-            AsyncSnapshot<QuerySnapshot> snapshot;
-            List<DocumentSnapshot> docs = snapshot.data.documents;
-            final _selectedDay = DateTime.now();
-            Map<String, dynamic> data = docs[0].data;
             print(events);
             setState(() {
-              
-              selectedEvents = events;
+              _selectedEvents = events;
             }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
             //en format DateTame només s'haurà de filtrar
           },
@@ -224,15 +137,13 @@ class _User_CalendarState extends State<User_Calendar> {
         Expanded(child: buildEventList()),
       ]),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          inReserve();
-          print("hola");
-        },
-      ),
+          child: Icon(Icons.add),
+          onPressed: () {
+            print('hey');
+            setState(() {
+              addEvent(today(), 'bla', _events);
+            });
+          }),
     );
   }
 }
-/*   
-    
-*/

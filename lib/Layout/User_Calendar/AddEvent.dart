@@ -4,5 +4,9 @@ addEvent(DateTime date, String name, Map<DateTime, List> events) {
   } else {
     events[date] = [name];
   }
-  return events;
+}
+
+DateTime today() {
+  DateTime now = DateTime.now();
+  return DateTime(now.year, now.month, now.day);
 }

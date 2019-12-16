@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange
       ),
-      home: MainScreen(),
+      home: User_Calendar(),
     );
   }
 }
