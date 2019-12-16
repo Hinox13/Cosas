@@ -33,14 +33,30 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       body: StreamBuilder(
-        stream: Firestore.instance.collection('users').snapshots(),
+        stream: Firestore.instance.collection('group').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if(!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
-          Map<String, dynamic> data = docs[0].data;
-          return Text('${docs[0].data['Name']}');
+       
+          return ListView.builder(
+            itemCount: docs.length ,
+            itemBuilder: (context, index){
+            Map<String, dynamic> data = docs[index].data;
+
+            return ListTile(
+              leading: CircleAvatar(),
+              title: Text(data['name']),
+             onTap: (){
+              
+             }
+            );
+            }
+          );
+
+          
+          //Text('${docs[0].data['name']}');
         },
       ),
     );
