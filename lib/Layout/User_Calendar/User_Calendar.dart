@@ -87,6 +87,9 @@ class _User_CalendarState extends State<User_Calendar> {
     super.initState();
   }
 
+
+
+
   @override
   void dispose() {
     _calendarController.dispose();
@@ -98,10 +101,12 @@ class _User_CalendarState extends State<User_Calendar> {
  
 
     Widget buildEventList() {
-      print(_selectedEvents);
+   
       return ListView(
-        children: _selectedEvents
-            .map((event) => Container(
+        children: _selectedEvents.asMap().entries
+            .map((event) {
+            int idx = event.key;
+           return  Container(
                   decoration: BoxDecoration(
                     border: Border.all(width: 0.8),
                     borderRadius: BorderRadius.circular(12.0),
@@ -109,11 +114,20 @@ class _User_CalendarState extends State<User_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text(event.toString()),
-                    onTap: () => print('$event tapped!'),
+                    title: Text(event.value.toString()),
+                    onTap: () => print("${event.value} tapped!"),
+                    onLongPress: (){
+                      setState(
+                      _selectedEvents.removeAt(idx)
+                     
+                     
+
+                      );
+
+                    },
                   ),
-                ))
-            .toList(),
+                );}).toList()
+            
       );
     }
 
@@ -130,8 +144,10 @@ class _User_CalendarState extends State<User_Calendar> {
             selectedColor: Colors.pink,
           ),
           onDaySelected: (date, events) {
+            
             print(events);
             setState(() {
+            
               _selectedEvents = events;
             }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
             //en format DateTame només s'haurà de filtrar
