@@ -98,9 +98,9 @@ class _User_CalendarState extends State<User_Calendar> {
 
   @override
   Widget build(BuildContext context) {
- 
+ DateTime select;
 
-    Widget buildEventList() {
+    Widget buildEventList(DateTime select) {
    
       return ListView(
         children: _selectedEvents.asMap().entries
@@ -114,17 +114,14 @@ class _User_CalendarState extends State<User_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text(event.value.toString()),
-                    onTap: () => print("${event.value} tapped!"),
+                    title: Text(event.value),
+                    onTap: () => print(event.value),
                     onLongPress: (){
-                      setState(
-                      _selectedEvents.removeAt(idx)
-                     
-                     
-
+                      setState((){ _selectedEvents.removeAt(idx);}
                       );
 
                     },
+                    
                   ),
                 );}).toList()
             
@@ -144,7 +141,7 @@ class _User_CalendarState extends State<User_Calendar> {
             selectedColor: Colors.pink,
           ),
           onDaySelected: (date, events) {
-            
+           select=date;
             print(events);
             setState(() {
             
@@ -154,7 +151,7 @@ class _User_CalendarState extends State<User_Calendar> {
           },
         ),
         const SizedBox(height: 8.0),
-        Expanded(child: buildEventList()),
+        Expanded(child: buildEventList(select)),
       ]),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
