@@ -11,8 +11,10 @@ class User_Calendar extends StatefulWidget {
 }
 
 class _User_CalendarState extends State<User_Calendar> {
+  
   CalendarController _calendarController;
   Map<DateTime, List> _events;
+   List _selectedEvents;
 
   /*addEvent(DateTime date, String name) {
     if (_events.containsKey(date)) {
@@ -79,6 +81,7 @@ class _User_CalendarState extends State<User_Calendar> {
         'Event C14'
       ],
     };
+  _selectedEvents =_events[today()] ?? [];
 
     _calendarController = CalendarController();
     super.initState();
@@ -92,9 +95,10 @@ class _User_CalendarState extends State<User_Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    List _selectedEvents = _events[today()] ?? [];
+ 
 
     Widget buildEventList() {
+      print(_selectedEvents);
       return ListView(
         children: _selectedEvents
             .map((event) => Container(
