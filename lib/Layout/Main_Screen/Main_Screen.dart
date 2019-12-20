@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
+
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
 import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 
@@ -33,15 +33,17 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       body: StreamBuilder(
-        stream: Firestore.instance.collection('users').snapshots(),
+        stream: Firestore.instance.collection('group').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if(!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
+
           Map<String, dynamic> data = docs[0].data;
           return Text('${docs[0].documentID}');
           //for(var p in docs) Text('${docs[p].data}');
+
         },
       ),
     );

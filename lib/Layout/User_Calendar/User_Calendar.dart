@@ -11,8 +11,10 @@ class User_Calendar extends StatefulWidget {
 }
 
 class _User_CalendarState extends State<User_Calendar> {
+  
   CalendarController _calendarController;
   Map<DateTime, List> _events;
+   List _selectedEvents;
 
   /*addEvent(DateTime date, String name) {
     if (_events.containsKey(date)) {
@@ -29,10 +31,14 @@ class _User_CalendarState extends State<User_Calendar> {
     _events = {
       _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
     };
+  _selectedEvents =_events[today()] ?? [];
 
     _calendarController = CalendarController();
     super.initState();
   }
+
+
+
 
   @override
   void dispose() {
@@ -42,12 +48,15 @@ class _User_CalendarState extends State<User_Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    List _selectedEvents = _events[today()] ?? [];
+ DateTime select;
 
-    Widget buildEventList() {
+    Widget buildEventList(DateTime select) {
+   
       return ListView(
-        children: _selectedEvents
-            .map((event) => Container(
+        children: _selectedEvents.asMap().entries
+            .map((event) {
+            int idx = event.key;
+           return  Container(
                   decoration: BoxDecoration(
                     border: Border.all(width: 0.8),
                     borderRadius: BorderRadius.circular(12.0),
@@ -55,11 +64,17 @@ class _User_CalendarState extends State<User_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text(event.toString()),
-                    onTap: () => print('$event tapped!'),
+                    title: Text(event.value),
+                    onTap: () => print(event.value),
+                    onLongPress: (){
+                      setState((){ _selectedEvents.removeAt(idx);}
+                      );
+
+                    },
+                    
                   ),
-                ))
-            .toList(),
+                );}).toList()
+            
       );
     }
 
@@ -76,15 +91,17 @@ class _User_CalendarState extends State<User_Calendar> {
             selectedColor: Colors.pink,
           ),
           onDaySelected: (date, events) {
+           select=date;
             print(events);
             setState(() {
+            
               _selectedEvents = events;
             }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
             //en format DateTame només s'haurà de filtrar
           },
         ),
         const SizedBox(height: 8.0),
-        Expanded(child: buildEventList()),
+        Expanded(child: buildEventList(select)),
       ]),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
