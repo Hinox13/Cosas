@@ -7,13 +7,13 @@ class User {
 }
 
 class Asset {
- String name;
+ String name, id;
 
  Asset(this.name);
 }
 
 class Event {
- String userid,assetid;
+ String userid,assetid, id;
  DateTime init, end;
  
  Event(this.userid, this.init, this.end);
