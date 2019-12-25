@@ -1,4 +1,5 @@
 addEvent(DateTime date, String name, Map<DateTime, List> events) {
+  print(date);
   if (events.containsKey(date)) {
     events[date].add(name);
   } else {

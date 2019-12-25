@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:projecte_visual/Layout/User_Calendar/AddEvent.dart';
+import 'package:projecte_visual/classes.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class User_Calendar extends StatefulWidget {
@@ -13,7 +14,7 @@ class User_Calendar extends StatefulWidget {
 
 class _User_CalendarState extends State<User_Calendar> {
   CalendarController _calendarController;
-  Map<DateTime, List> _events;
+  Map<DateTime, List> _events = {};
   List _selectedEvents;
 
   /*addEvent(DateTime date, String name) {
@@ -27,14 +28,7 @@ class _User_CalendarState extends State<User_Calendar> {
 
   void initState() {
     final _selectedDay = today();
-    Firestore.instance.collection('event').snapshots();
-    AsyncSnapshot<QuerySnapshot> snapshot;
-    List<DocumentSnapshot> eventsfire = snapshot.data.documents;
-    _events = {};
-    for (int i = 0; i < eventsfire.length; i++) {}
-
-    _selectedEvents = _events[today()] ?? [];
-
+     _selectedEvents = _events[today()] ?? [];
     _calendarController = CalendarController();
     super.initState();
   }
@@ -78,17 +72,20 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
       ),
       body: StreamBuilder(
         stream: Firestore.instance
-            .collection('events')
+            .collection('event')
             .where('assetid', isEqualTo: idasset)
-            .snapshots(),
+            .snapshots(), //Filtrem de firebase només els que tenen la id que ens interessen
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
 
-          List<DocumentSnapshot> docs = snapshot.data.documents;
-          //List<Event> events = kdjdkjfsdkfj(docs);
-
+          List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
+          List<Event> events = docaEvent_list(docs);
+          _events.clear();
+          for (int i = 0; i < events.length; i++){
+            addEvent(events[i].init, events[i].userid, _events);
+          }
 
           return Column(children: <Widget>[
             TableCalendar(

@@ -41,7 +41,13 @@ class _MainScreenState extends State<MainScreen> {
           List<DocumentSnapshot> docs = snapshot.data.documents;
 
           Map<String, dynamic> data = docs[0].data;
-          return Text('${docs[0].documentID}');
+          var event = Firestore.instance.collection('event');
+
+          return Column(
+            children: <Widget>[
+              Text('${docs[0].documentID}'),
+            ],
+          );
           //for(var p in docs) Text('${docs[p].data}');
 
         },
