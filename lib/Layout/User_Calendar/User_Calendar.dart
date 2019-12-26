@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -54,11 +55,15 @@ class _User_CalendarState extends State<User_Calendar> {
           ),
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           child: ListTile(
-            title: Text(event.value),
+            title: Text(event.value['eventid']),
             onTap: () => print(event.value),
             onLongPress: () {
               setState(() {
                 _selectedEvents.removeAt(idx);
+                Firestore.instance.collection('event').document(event.value['eventid']).delete();
+              
+              
+                
               });
             },
           ),
@@ -84,7 +89,7 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
           List<Event> events = docaEvent_list(docs);
           _events.clear();
           for (int i = 0; i < events.length; i++){
-            addEvent(events[i].init, events[i].userid, _events);
+            addEvent(events[i].init,{'userid': events[i].userid, 'eventid': events[i].eventid}, _events);
           }
 
           return Column(children: <Widget>[
@@ -114,7 +119,7 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
           onPressed: () {
             print('hey');
             setState(() {
-              addEvent(select, 'bla', _events);
+             // addEvent(select, 'bla', _events);
             });
           }),
     );

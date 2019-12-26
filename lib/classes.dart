@@ -14,13 +14,13 @@ class Asset {
 }
 
 class Event {
-  String userid, assetid;
+  String userid, assetid, eventid;
   DateTime init, end;
-
-  Event(this.userid, this.assetid, this.init, this.end);
-  Event.fromFirestore(Map<String, dynamic> doc)
+  Event(this.userid, this.assetid, this.init, this.end, this.eventid);
+  Event.fromFirestore(Map<String, dynamic> doc, String index)
       : userid = doc['userid'],
         assetid = doc['assetid'],
+        eventid = index,
         init = doc['init'],
         end = doc['end'];
 }
@@ -31,15 +31,16 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
   Event evento;
   Timestamp timeinit;
   Timestamp timeend;
+  String freference;
   for (int i = 0; i < doc.length; i++) {
     timeinit = doc[i].data['init'];
     timeend = doc[i].data['end'];
-    evento = Event('jaime','peeepee',today(), today());
+    freference = doc[i].documentID;
     print(doc[i].data['userid']);
     print(doc[i].data['assetid']);
     print( timeinit.toDate());
     print(timeend.toDate());
-    event_list.add(Event(doc[i].data['userid'], doc[i].data['assetid'], timeinit.toDate(), timeend.toDate()));
+    event_list.add(Event(doc[i].data['userid'], doc[i].data['assetid'], timeinit.toDate(), timeend.toDate(),freference));
     //event_list.add(evento);
   }
   return event_list;
