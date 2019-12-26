@@ -88,8 +88,8 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
           List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
           List<Event> events = docaEvent_list(docs);
           _events.clear();
-          for (int i = 0; i < events.length; i++){
-            addEvent(events[i].init,{'userid': events[i].userid, 'eventid': events[i].eventid}, _events);
+          for (var eve in events){
+            addEvent(eve.init,{'userid': eve.userid, 'eventid': eve.eventid}, _events);
           }
 
           return Column(children: <Widget>[
@@ -117,7 +117,7 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            print('hey');
+            //print('hey');
             setState(() {
              // addEvent(select, 'bla', _events);
             });
