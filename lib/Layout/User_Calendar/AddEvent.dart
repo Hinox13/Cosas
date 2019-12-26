@@ -1,8 +1,9 @@
-addEvent(DateTime date, String name, Map<DateTime, List> events) {
+addEvent(DateTime date, Map<String, dynamic> reserve, Map<DateTime, List> events) {
+  print(date);
   if (events.containsKey(date)) {
-    events[date].add(name);
+    events[date].add(reserve);
   } else {
-    events[date] = [name];
+    events[date] = [reserve];
   }
 }
 
