@@ -18,15 +18,6 @@ class _User_CalendarState extends State<User_Calendar> {
   Map<DateTime, List> _events = {};
   List _selectedEvents;
 
-  /*addEvent(DateTime date, String name) {
-    if (_events.containsKey(date)) {
-      _events[date].add(name);
-    } else {
-      _events[date] = [name];
-    }
-    ID BATERIA 2XaGydRA9dYh0ePMDwoc
-  }*/
-
   void initState() {
     final _selectedDay = today();
      _selectedEvents = _events[today()] ?? [];
@@ -61,9 +52,6 @@ class _User_CalendarState extends State<User_Calendar> {
               setState(() {
                 _selectedEvents.removeAt(idx);
                 Firestore.instance.collection('event').document(event.value['eventid']).delete();
-              
-              
-                
               });
             },
           ),
@@ -117,46 +105,9 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            //print('hey');
             setState(() {
-             // addEvent(select, 'bla', _events);
             });
           }),
     );
   }
 }
-
-/*
-
-StreamBuilder(
-        stream: Firestore.instance.collection('users').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if(!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          List<DocumentSnapshot> docs = snapshot.data.documents;
-          return Column(children: <Widget>[
-        TableCalendar(
-          calendarController: _calendarController,
-          events: _events,
-          calendarStyle: CalendarStyle(
-            todayColor: Colors.deepPurple,
-            selectedColor: Colors.pink,
-          ),
-          onDaySelected: (date, events) {
-           select=date;
-            print(events);
-            setState(() {
-            
-              _selectedEvents = events;
-            }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
-            //en format DateTame només s'haurà de filtrar
-          },
-        ),
-        const SizedBox(height: 8.0),
-        Text('Polla en vinagre'),
-        Expanded(child: buildEventList(select)),
-      ]),
-        },
-      ),
-*/

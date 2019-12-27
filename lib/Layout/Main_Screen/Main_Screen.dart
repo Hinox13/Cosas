@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
 import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
+import 'package:projecte_visual/classes.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -42,12 +44,16 @@ class _MainScreenState extends State<MainScreen> {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
+          List<Group> groups = docaGrup_list(docs);
           return ListView.builder(
-            itemCount: docs.length,
+            itemCount: groups.length,
             itemBuilder: (context, index) {
-              Map<String, dynamic> data = docs[index].data;
               return InkWell(
-                onTap: (){},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Group_Layout(groups[index].id),
+                  ));
+                },
                 child: ListTile(
                   leading: Icon(
                     Icons.account_circle,
@@ -55,15 +61,12 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   title: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(data['name']),
+                    child: Text(groups[index].name),
                   ),
                 ),
               );
             },
           );
-          /*
-          2NddPpxy3J5zQFctupz5
-          */
         },
       ),
     );

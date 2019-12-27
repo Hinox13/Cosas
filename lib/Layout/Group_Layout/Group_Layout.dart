@@ -4,6 +4,7 @@ import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 
 class Group_Layout extends StatefulWidget {
   @override
+  Group_Layout(String id);
   _Group_LayoutState createState() => _Group_LayoutState();
 }
 
