@@ -44,7 +44,6 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
   for (var docu in doc) {
     eventid = docu.documentID;
     event_list.add(Event(docu.data['userid'], docu.data['assetid'], docu.data['init'].toDate(), docu.data['end'].toDate(),eventid));
-    //event_list.add(evento);
   }
   return event_list;
 }

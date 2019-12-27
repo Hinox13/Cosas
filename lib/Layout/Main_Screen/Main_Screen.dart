@@ -33,23 +33,37 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       body: StreamBuilder(
-        stream: Firestore.instance.collection('group').snapshots(),
+        stream: Firestore.instance
+            .collection('group')
+            .where('members', arrayContains: '2NddPpxy3J5zQFctupz5')
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if(!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
-
-          Map<String, dynamic> data = docs[0].data;
-          var event = Firestore.instance.collection('event');
-
-          return Column(
-            children: <Widget>[
-              Text('${docs[0].documentID}'),
-            ],
+          return ListView.builder(
+            itemCount: docs.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> data = docs[index].data;
+              return InkWell(
+                onTap: (){},
+                child: ListTile(
+                  leading: Icon(
+                    Icons.account_circle,
+                    size: 40,
+                  ),
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(data['name']),
+                  ),
+                ),
+              );
+            },
           );
-          //for(var p in docs) Text('${docs[p].data}');
-
+          /*
+          2NddPpxy3J5zQFctupz5
+          */
         },
       ),
     );
