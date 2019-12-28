@@ -77,6 +77,7 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
       ).then((time) {
         if (time != null)
     print(temp);
+    temp=
       }); 
     }
 
