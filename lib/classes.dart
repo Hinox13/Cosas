@@ -26,6 +26,17 @@ class Event {
         eventid = index,
         init = doc['init'],
         end = doc['end'];
+  Map<String, dynamic> toFirestore(){
+      
+     return {
+       'assetid': assetid,
+       'end': Timestamp.fromDate(end),
+       'init': Timestamp.fromDate(init),
+       'userid': userid,
+     } ;
+
+  }
+
 }
 /////////////////////////////////////////////////////////////////////////////////
 
