@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:projecte_visual/classes.dart';
 
 FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid) {
      DateTime initTime;
@@ -61,8 +62,8 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                 child: Text('Reserve'),
                 onPressed: () {
                   List<DateTime> t = [initTime, finishTime];
-                   Map<String, dynamic> event = tiempo(t, assetid);
-                   Firestore.instance.collection('event').add(event);
+                   Event e= Event('estoesunaprueba',assetid,t[0],t[1]);
+                   Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);
                 },
               ),
@@ -77,15 +78,11 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
       ).then((time) {
         if (time != null)
     print(temp);
+  
     temp=time;
+    
       }); 
     }
 
-  Map<String, dynamic> tiempo(dynamic time, String assetid){
-    return {
-      'end': time[0],
-      'init':time[1],
-      'assetid':assetid
-    };
-  }
+ 
   

@@ -10,7 +10,7 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
   String eventid;
   for (var docu in doc) {
     eventid = docu.documentID;
-    event_list.add(Event(docu.data['userid'], docu.data['assetid'], docu.data['init'].toDate(), docu.data['end'].toDate(),eventid));
+    event_list.add(Event(docu.data['userid'], docu.data['assetid'], docu.data['init'].toDate(), docu.data['end'].toDate(),eventid:eventid));
   }
   return event_list;
 }
@@ -20,7 +20,7 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
 List<Event> doc2Event (List<DocumentSnapshot> doc){
   List<Event> out =[];
   for (var docs in doc){
-    out.add(new Event(docs.data['userid'],docs.data['assetid'],docs.data['init'].toDate(),docs.data['end'].toDate(),docs.documentID));
+    out.add(new Event(docs.data['userid'],docs.data['assetid'],docs.data['init'].toDate(),docs.data['end'].toDate(),eventid: docs.documentID));
   }
   return out;
 }
