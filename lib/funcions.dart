@@ -1,6 +1,8 @@
 // ARXIU DE LES FUNCIONS QUE ES FAN SERVIR
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projecte_visual/classes.dart';
+import 'dart:core';
+import 'package:flutter/material.dart';
 
 ///////CONVERSIO DEL FIREBASE A LLISTA D'EVENTS/////////////////////////////////
 List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
@@ -35,9 +37,13 @@ List<User> docaUser_list(List<DocumentSnapshot> doc) {
 //    Intento de conseguir la subcolección      //
 //    La cosa es que paseu la llista de         // 
 //    DocumentSnapshots del grup                //
-// List<Asset> subdocus(List<DocumentSnapshot> gru){
-//   for(var grup in gru){
-//     CollectionReference groupRef = grup.reference.collection('group');
-//     List<DocumentSnapshot> productsnap = groupRef.getDocuments().grup();
-//   }
-// }
+List<Asset> getAssets(String idgroup){
+  Firestore.instance.collection('group').document(idgroup).collection('assets').snapshots();
+  AsyncSnapshot<QuerySnapshot> snapshot; 
+  List<DocumentSnapshot> docs = snapshot.data.documents;
+  List<Asset> assets = [];
+  for (var docu in docs){
+    assets.add(new Asset(docu.data['name']));
+  }
+  return assets;
+}
