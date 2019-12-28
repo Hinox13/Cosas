@@ -6,15 +6,17 @@ import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
 class Group_Layout extends StatefulWidget {
+  String idgroup;
+  Group_Layout(this.idgroup);
   @override
-  Group_Layout(String id);
   _Group_LayoutState createState() => _Group_LayoutState();
 }
 
 class _Group_LayoutState extends State<Group_Layout> {
   @override
-  var idgroup = 'iVOGHEIQKJpdFeWhnGrU';
+  
   Widget build(BuildContext context) {
+    String idgroup= this.widget.idgroup;
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Name goes Here'),
