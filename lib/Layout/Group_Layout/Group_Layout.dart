@@ -33,7 +33,7 @@ class _Group_LayoutState extends State<Group_Layout> {
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => User_Calendar(),
+            builder: (context) => User_Calendar(), 
           ));
         },
       ),
@@ -55,7 +55,7 @@ class _Group_LayoutState extends State<Group_Layout> {
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Group_Layout(assets[index].id),
+                    builder: (context) => User_Calendar(idgroup: idgroup,idasset:assets[index].id),
                   ));
                 },
                 child: ListTile(

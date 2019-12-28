@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'package:projecte_visual/Layout/User_Calendar/Reserva.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:projecte_visual/funcions.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class User_Calendar extends StatefulWidget {
+  String idgroup,idasset;
+  User_Calendar({this.idgroup, this.idasset});
   @override
   _User_CalendarState createState() => _User_CalendarState();
 }
@@ -18,7 +21,7 @@ class _User_CalendarState extends State<User_Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List> _events = {};
   List _selectedEvents;
-
+  List<DateTime>time;
   void initState() {
     final _selectedDay = today();
      _selectedEvents = _events[today()] ?? [];
@@ -34,6 +37,9 @@ class _User_CalendarState extends State<User_Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    String idgroup=this.widget.idgroup;
+    String idasset=this.widget.idasset;
+
     DateTime select;
 
     Widget buildEventList(DateTime select) {
@@ -59,7 +65,7 @@ class _User_CalendarState extends State<User_Calendar> {
         );
       }).toList());
     }
-String idasset = '2XaGydRA9dYh0ePMDwoc';
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Reserve Calendar'),
@@ -107,6 +113,7 @@ String idasset = '2XaGydRA9dYh0ePMDwoc';
           child: Icon(Icons.add),
           onPressed: () {
             setState(() {
+              inReserve(context,time,idgroup,idasset);
             });
           }),
     );
