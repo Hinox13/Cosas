@@ -18,13 +18,23 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
 ////////  Un altre manera de pasar de Snapshots de Firebase a Classes EVENT /////////////////////////////
 
 List<Event> doc2Event (List<DocumentSnapshot> doc){
-  List<Event> out;
+  List<Event> out =[];
   for (var docs in doc){
     out.add(new Event(docs.data['userid'],docs.data['assetid'],docs.data['init'].toDate(),docs.data['end'].toDate(),docs.documentID));
-    print(out);
   }
+  return out;
 }
-
+///
+///////CONVERSIO DEL FIREBASE A LLISTA DE GRUPS/////////////////////////////////
+List<Group> docaGrup_list(List<DocumentSnapshot> doc) {
+  List<Group> group_list= [];
+  for (var docu in doc) {
+    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members']));
+  }
+  return group_list;
+}
+/////////////////////////////////////////////////////////////////////////////////
+///
 ///////CONVERSIO DEL FIREBASE A LLISTA DE USERS/////////////////////////////////
 List<User> docaUser_list(List<DocumentSnapshot> doc) {
   List<User> user_list = [];
@@ -43,7 +53,7 @@ List<Asset> getAssets(String idgroup){
   List<DocumentSnapshot> docs = snapshot.data.documents;
   List<Asset> assets = [];
   for (var docu in docs){
-    assets.add(new Asset(docu.data['name']));
+    assets.add(new Asset(docu.documentID,docu.data['name']));
   }
   return assets;
 }

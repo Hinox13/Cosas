@@ -9,9 +9,9 @@ class User {
 }
 ///////////////////////////////CLASSE D'ASSETS/////////////////////////////////
 class Asset {
-  String name;
+  String name, id;
 
-  Asset(this.name);
+  Asset(this.id,this.name);
 }
 /////////////////////////////////////////////////////////////////////////////////
 ///
@@ -29,19 +29,6 @@ class Event {
 }
 /////////////////////////////////////////////////////////////////////////////////
 
-class Invent {
-  String userid, assetid, eventid;
-  DateTime init, end;
-  DocumentReference reference;
-
-  Invent.fromMap(Map<String,dynamic> map, {this.reference})
-  : userid = map['userid'],
-  assetid = map['assetid'],
-  eventid = map['eventid'];
-}
-
-
-///
 ///////////////////////CLASSE DE GROUPS/////////////////////////////////////////
 class Group {
   String name, admin, id;
@@ -50,15 +37,3 @@ class Group {
   Group(this.name, this.admin, this.id, this.user_list);
 }
 ///////////////////////////////////////////////////////////////////////////////
-///
-///////CONVERSIO DEL FIREBASE A LLISTA DE GRUPS/////////////////////////////////
-List<Group> docaGrup_list(List<DocumentSnapshot> doc) {
-  List<Group> group_list = [];
-  for (var docu in doc) {
-    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members']));
-  }
-  return group_list;
-}
-/////////////////////////////////////////////////////////////////////////////////
-///
-
