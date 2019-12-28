@@ -47,10 +47,7 @@ List<User> docaUser_list(List<DocumentSnapshot> doc) {
 //    Intento de conseguir la subcolección      //
 //    La cosa es que paseu la llista de         // 
 //    DocumentSnapshots del grup                //
-List<Asset> getAssets(String idgroup){
-  Firestore.instance.collection('group').document(idgroup).collection('assets').snapshots();
-  AsyncSnapshot<QuerySnapshot> snapshot; 
-  List<DocumentSnapshot> docs = snapshot.data.documents;
+List<Asset> getAssets(List<DocumentSnapshot> docs){
   List<Asset> assets = [];
   for (var docu in docs){
     assets.add(new Asset(docu.documentID,docu.data['name']));
