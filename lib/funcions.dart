@@ -39,7 +39,7 @@ List<Group> docaGrup_list(List<DocumentSnapshot> doc) {
 List<User> docaUser_list(List<DocumentSnapshot> doc) {
   List<User> user_list = [];
   for (var docu in doc) {
-    user_list.add(User(docu.data['id'], docu.data['name'], docu.data['status']));
+    user_list.add(User(docu.documentID, docu.data['name'], docu.data['status']));
   }
   return user_list;
 }
