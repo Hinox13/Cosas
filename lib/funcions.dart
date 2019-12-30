@@ -54,3 +54,16 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
   }
   return assets;
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+//    Trec del grup en el que estem dins       //
+//    la matriu de membres                     //
+//    ens permét construir després la llista 
+//    d'usuaris d'aquell grup                  //
+ llistamembres(String idgroup, List<dynamic> members) async{
+   await Firestore.instance.collection('group').document(idgroup).get().then((doc){
+     members=doc['members'];
+   });
+
+  print(members);
+ }
