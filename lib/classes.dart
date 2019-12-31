@@ -45,6 +45,6 @@ class Group {
   String name, admin, id,description;
   List user_list;
 
-  Group(this.name, this.admin, this.id, this.user_list, {this.description});
+  Group(this.name, this.admin, this.id, this.user_list,{this.description});
 }
 ///////////////////////////////////////////////////////////////////////////////

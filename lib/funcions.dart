@@ -29,7 +29,7 @@ List<Event> doc2Event (List<DocumentSnapshot> doc){
 List<Group> docaGrup_list(List<DocumentSnapshot> doc) {
   List<Group> group_list= [];
   for (var docu in doc) {
-    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members']));
+    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members'], description: docu.data['description']));
   }
   return group_list;
 }
@@ -60,10 +60,10 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
 //    la matriu de membres                     //
 //    ens permét construir després la llista 
 //    d'usuaris d'aquell grup                  //
- llistamembres(String idgroup, List<dynamic> members) async{
-   await Firestore.instance.collection('group').document(idgroup).get().then((doc){
-     members=doc['members'];
+ llistamembres(String idgroup, List<dynamic> members, String info){
+  Firestore.instance.collection('group').document(idgroup).get().then((doc){
+     info=doc['description'];
    });
-
-  print(members);
+ 
+  
  }

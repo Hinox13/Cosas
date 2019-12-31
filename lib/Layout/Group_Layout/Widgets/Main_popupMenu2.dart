@@ -5,7 +5,7 @@ import 'package:projecte_visual/Layout/Group_Info/Group_Info.dart';
 
 class Main_PopupMenu2 extends StatelessWidget {
  final String idgroup;
-  const Main_PopupMenu2( {
+ const  Main_PopupMenu2( {
     this.idgroup,
      Key key,
   }) : super(key: key);

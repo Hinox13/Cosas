@@ -7,7 +7,7 @@ import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
 class Group_Layout extends StatefulWidget {
-  String idgroup;
+  final String idgroup;
   Group_Layout(this.idgroup);
   @override
   _Group_LayoutState createState() => _Group_LayoutState();
