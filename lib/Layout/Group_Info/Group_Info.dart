@@ -44,13 +44,9 @@ class _Group_InfoState extends State<Group_Info>
         child: Column(
           children: <Widget>[
             TitleDescription(),
-
             SizedBox(height: 15),
-
             TextDescription(idgroup: idgroup),
-
             SizedBox(height: 15),
-
             ListMembers(members: members),
           ],
         ),
@@ -58,8 +54,6 @@ class _Group_InfoState extends State<Group_Info>
     );
   }
 }
-
-
 
 /////////////////////////////////////////////////////////////
 ///  Titol Descscripció del grup /////////////////////////
@@ -70,7 +64,7 @@ class TitleDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Group Description'));
+    return Center(child: Text('Group Description',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),);
   }
 }
 
@@ -101,15 +95,16 @@ class TextDescription extends StatelessWidget {
               List<DocumentSnapshot> docs = snapshot.data.documents;
               int index;
               for (int i = 0; i < docs.length; i++) {
- //No he trobat forma per accedir directament a la descripció del group amb el Stream Builder
+                //No he trobat forma per accedir directament a la descripció del group amb el Stream Builder
                 if (docs[i].documentID == idgroup) index = i;
               }
               return Container(
-                decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(docs[index].data['description']),
-                ));
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(docs[index].data['description']),
+                  ));
             },
           ),
         ),
@@ -117,7 +112,6 @@ class TextDescription extends StatelessWidget {
     );
   }
 }
-
 
 /////////////////////////////////////////////////////////////////
 ///   LLista dels membres del grup seleccionat   ////////////////
@@ -149,7 +143,26 @@ class ListMembers extends StatelessWidget {
             itemCount: users.length,
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                        contentPadding: EdgeInsets.all(20),
+                        title: Text('Status of ${users[index].name}'),
+                        content: 
+                      
+                 Container(height: 250,
+                          width: 300,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black87)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:15.0, vertical:15),
+                              child: Text(users[index].status),
+                            ),
+                          
+                        )),
+                  );
+                },
                 child: ListTile(
                   leading: Icon(
                     Icons.account_circle,
@@ -158,6 +171,12 @@ class ListMembers extends StatelessWidget {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(users[index].name),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      users[index].status, overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               );
@@ -168,4 +187,3 @@ class ListMembers extends StatelessWidget {
     );
   }
 }
-
