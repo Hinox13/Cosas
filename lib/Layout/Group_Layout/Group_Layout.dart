@@ -15,9 +15,8 @@ class Group_Layout extends StatefulWidget {
 
 class _Group_LayoutState extends State<Group_Layout> {
   @override
-  
   Widget build(BuildContext context) {
-    String idgroup= this.widget.idgroup;
+    String idgroup = this.widget.idgroup;
     return Scaffold(
       appBar: AppBar(
         title: Text('Group Name goes Here'),
@@ -34,7 +33,7 @@ class _Group_LayoutState extends State<Group_Layout> {
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => User_Calendar(), 
+            builder: (context) => User_Calendar(),
           ));
         },
       ),
@@ -53,11 +52,18 @@ class _Group_LayoutState extends State<Group_Layout> {
           return ListView.builder(
             itemCount: assets.length,
             itemBuilder: (context, index) {
+
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => User_Calendar(idgroup: idgroup,idasset:assets[index].id),
+                    builder: (context) => User_Calendar(
+                        idgroup: idgroup, idasset: assets[index].id),
                   ));
+                },
+                onLongPress: () {
+                  assets.removeAt(index);
+                  Firestore.instance.collection('group').document(idgroup).collection('assets').document(assets[index].id).delete();
+                  // Firestore.instance.collection('event').document(event.value['eventid']).delete();
                 },
                 child: ListTile(
                   leading: Icon(
