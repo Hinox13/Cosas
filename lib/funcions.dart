@@ -29,7 +29,7 @@ List<Event> doc2Event (List<DocumentSnapshot> doc){
 List<Group> docaGrup_list(List<DocumentSnapshot> doc) {
   List<Group> group_list= [];
   for (var docu in doc) {
-    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members'], description: docu.data['description']));
+    group_list.add(Group(docu.data['name'], docu.data['admin'], docu.documentID, docu.data['members'], docu.data['description']));
   }
   return group_list;
 }
