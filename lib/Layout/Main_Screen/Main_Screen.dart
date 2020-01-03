@@ -11,7 +11,7 @@ class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
 }
-
+String iduser = 'kFhr7ukMG6gqXg2Vyzpx';
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
       body: StreamBuilder(
         stream: Firestore.instance
             .collection('group')
-            .where('members', arrayContains: '2NddPpxy3J5zQFctupz5')
+            .where('members', arrayContains: iduser)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {

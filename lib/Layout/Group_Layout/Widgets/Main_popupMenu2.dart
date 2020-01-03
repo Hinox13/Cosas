@@ -4,9 +4,9 @@ import 'package:projecte_visual/Layout/Add_Group/Add_Group.dart';
 import 'package:projecte_visual/Layout/Group_Info/Group_Info.dart';
 
 class Main_PopupMenu2 extends StatelessWidget {
- final String idgroup;
+ final String id;//id del group on estem
  const  Main_PopupMenu2( {
-    this.idgroup,
+    this.id,
      Key key,
   }) : super(key: key);
 
@@ -37,7 +37,7 @@ class Main_PopupMenu2 extends StatelessWidget {
           switch (value) {
             case 'Afegir ':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add_Group()));
+                //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add_Group()));
               }
               break;
             case 'Eliminar':
@@ -47,7 +47,7 @@ class Main_PopupMenu2 extends StatelessWidget {
               break;
             case 'Info':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Info(idgroup)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Info(id)));
               }
               break;
             default:

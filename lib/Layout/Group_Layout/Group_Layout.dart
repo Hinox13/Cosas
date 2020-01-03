@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Widgets/Main_popupMenu2.dart';
-import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
 import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
@@ -22,7 +21,7 @@ class _Group_LayoutState extends State<Group_Layout> {
         title: Text('Group Name goes Here'),
         actions: <Widget>[
           //Widget para el desplegable add_group, Delete_group and profile
-          Main_PopupMenu2(idgroup: idgroup),
+          Main_PopupMenu2(id: idgroup),
         ],
       ),
       //Codigo para la visualizacion del calendario acual

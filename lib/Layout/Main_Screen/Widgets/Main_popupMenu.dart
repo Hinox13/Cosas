@@ -34,7 +34,7 @@ class Main_PopupMenu extends StatelessWidget {
           switch (value) {
             case 'Afegir':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add_Group()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Add_Group(userid)));
               }
               break;
             case 'Eliminar':
