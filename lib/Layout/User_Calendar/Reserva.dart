@@ -1,14 +1,22 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:projecte_visual/classes.dart';
 
-FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid) {
+FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, DateTime dayselected) {
      DateTime initTime;
       DateTime finishTime;
 
+ List<DateTime> timeOnDaySelected(DateTime init, DateTime finish, DateTime dayselected){ 
+  List<DateTime> timefixed = [
+   DateTime(dayselected.year,dayselected.month,dayselected.day, init.hour, init.minute, init.second),
+   DateTime(dayselected.year,dayselected.month,dayselected.day, finish.hour, finish.minute, finish.second)
+  ];
+  return timefixed;
+ }
       return showDialog(
         barrierDismissible: false,
         context: context,
@@ -61,7 +69,8 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
               FlatButton(
                 child: Text('Reserve'),
                 onPressed: () {
-                  List<DateTime> t = [initTime, finishTime];
+                List<DateTime> t= timeOnDaySelected(initTime,finishTime, dayselected);
+                  //List<DateTime> t = [initTime, finishTime];
                    Event e= Event('estoesunaprueba',assetid,t[0],t[1]);
                    Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);
