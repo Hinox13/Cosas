@@ -34,13 +34,13 @@ class _User_CalendarState extends State<User_Calendar> {
     _calendarController.dispose();
     super.dispose();
   }
-
+ DateTime select;
   @override
   Widget build(BuildContext context) {
     String idgroup=this.widget.idgroup;
     String idasset=this.widget.idasset;
 
-    DateTime select;
+   
 
     Widget buildEventList(DateTime select) {
       return ListView(
@@ -96,9 +96,12 @@ class _User_CalendarState extends State<User_Calendar> {
                 selectedColor: Colors.pink,
               ),
               onDaySelected: (date, events) {
-                select = date;
+              
+               
                 print(events);
                 setState(() {
+                    select = date;
+                     print(select.toString());
                   _selectedEvents = events;
                 }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
                 //en format DateTame només s'haurà de filtrar
@@ -112,8 +115,9 @@ class _User_CalendarState extends State<User_Calendar> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
+            print(select.toString());
             setState(() {
-              inReserve(context,time,idgroup,idasset);
+              inReserve(context,time,idgroup,idasset,select);
             });
           }),
     );
