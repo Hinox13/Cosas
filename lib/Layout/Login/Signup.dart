@@ -1,43 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
 
-class LoginScreen extends StatefulWidget {
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   String _password, _email;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-//Nota: implemento el  TextFormField perque ens permét validar
-// info: https://flutter.dev/docs/cookbook/forms/validation
-//concepte bàsic ---> Form() permét validar el contingut dels TextFormFields
-
-
-
-Future<void> signIn()async{
-  FormState formState= formKey.currentState;
-  if(formState.validate()){
-    print('valid');
-    formState.save();
-    try{
-    FirebaseUser user= await FirebaseAuth.instance.signInWithEmailAndPassword(email:_email, password:_password);
-    print(user.uid);
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainScreen(user:user)));
-    }catch(e){print(e.toString());}
-  }else{print('no valido ${_email}, ${_password}');}
-
-}
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+       appBar: AppBar(
         title: Text('Sign in'),
       ),
       body:Padding(
@@ -75,12 +53,35 @@ Future<void> signIn()async{
                   onPressed:signIn,
                   child: Text('Sign in'),
                 ),
+
+                RaisedButton(
+                  onPressed:(){
+                    
+                  },
+                  child: Text('Sign up'),
+                ),
               ],
             ),
           ),
       ),
       
+      
     );
   }
+
+  Future<void> signIn()async{
+  FormState formState= formKey.currentState;
+  if(formState.validate()){
+    print('valid');
+    formState.save();
+    try{
+    FirebaseUser user= await FirebaseAuth.instance.signInWithEmailAndPassword(email:_email, password:_password);
+    print(user.uid);
+    Navigator.of(context).pop();
+    }catch(e){print(e.toString());}
+  }else{print('no valido ${_email}, ${_password}');}
+
+}
+
 
 }
