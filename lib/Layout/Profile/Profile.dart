@@ -25,7 +25,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
     super.initState();
   }
 
-_changeName(BuildContext context,String actualname)async {
+  FutureOr _changeName(BuildContext context,User actualuser) {
 
     return showDialog(
        context: context,
@@ -34,15 +34,22 @@ _changeName(BuildContext context,String actualname)async {
             title: Text('Write your name'),
             content: TextField(
               controller: _controllername,
-              decoration: InputDecoration(hintText: actualname),
+              decoration: InputDecoration(hintText: actualuser.name),
             ),
             actions: <Widget>[
-              new FlatButton(
-                child: new Text('CANCEL'),
+              FlatButton(
+                child:  Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-              )
+              ),
+                FlatButton(
+                child:  Text('SAVE'),
+                onPressed: () async{
+                  await Firestore.instance.collection('users').document(actualuser.id).updateData({'name': _controllername.text});
+            
+                  Navigator.of(context).pop();
+                },)
             ],
           );
         });
@@ -97,7 +104,7 @@ _changeName(BuildContext context,String actualname)async {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                        setState(() => _changeName(context,actual_user.name));
+                        setState(() => _changeName(context,actual_user));
                       },
                     )
                   ],
