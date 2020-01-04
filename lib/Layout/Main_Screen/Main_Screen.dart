@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
@@ -8,13 +9,16 @@ import 'package:projecte_visual/funcions.dart';
 
 
 class MainScreen extends StatefulWidget {
+  FirebaseUser user;
+  MainScreen({this.user});
   @override
   _MainScreenState createState() => _MainScreenState();
 }
-String iduser = 'kFhr7ukMG6gqXg2Vyzpx';
+//String iduser = 'kFhr7ukMG6gqXg2Vyzpx';
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    String iduser = this.widget.user.uid;
     return Scaffold(
       appBar: AppBar(
         title: Text('Comparte.me'),
