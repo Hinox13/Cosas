@@ -14,8 +14,8 @@ class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
 }
-//String iduser = 'kFhr7ukMG6gqXg2Vyzpx';
 class _MainScreenState extends State<MainScreen> {
+  
   @override
   Widget build(BuildContext context) {
     String iduser = this.widget.user.uid;

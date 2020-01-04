@@ -9,17 +9,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
- //TextEditingController _controlpassword,_controlemail;
   String _password, _email;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-/*
-  @override
-  void initState() {
-    _controlpassword = TextEditingController();
-    _controlemail = TextEditingController();
-    super.initState();
-  }
-*/
+
 //Nota: implemento el  TextFormField perque ens permét validar
 // info: https://flutter.dev/docs/cookbook/forms/validation
 //concepte bàsic ---> Form() permét validar el contingut dels TextFormFields
@@ -55,7 +47,6 @@ Future<void> signIn()async{
             child: Column(
               children: <Widget>[
                 TextFormField(
-                 // controller:  _controlemail,
                   validator:(input) {
                     if (input.isEmpty) {
                       return 'Please, type the required email';
@@ -68,8 +59,6 @@ Future<void> signIn()async{
                 ),
                 SizedBox(height: 10),
                 TextFormField(
-             
-                  //controller: _controlpassword,
                   obscureText: true,
                   validator: (input) {
                     if (input.length <6) {
