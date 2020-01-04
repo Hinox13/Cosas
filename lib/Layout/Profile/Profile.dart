@@ -6,9 +6,6 @@ import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-String userid =
-    'kFhr7ukMG6gqXg2Vyzpx'; //En principi un cop fet el loggin rebrem aquest camp
-
 class Profile_Screen extends StatefulWidget {
   String userid;
   Profile_Screen(this.userid);
@@ -45,8 +42,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
               ),
                 FlatButton(
                 child:  Text('SAVE'),
-                onPressed: () async{
-                  await Firestore.instance.collection('users').document(actualuser.id).updateData({'name': _controllername.text});
+                onPressed: () {
+                  Firestore.instance.collection('users').document(actualuser.id).updateData({'name': _controllername.text});
             
                   Navigator.of(context).pop();
                 },)
@@ -54,15 +51,42 @@ class _Profile_ScreenState extends State<Profile_Screen> {
           );
         });
   }
-/*
-  _changeStatus(BuildContext context)async {
-    return showDialog();
-  }*/
+
+  FutureOr _changeStatus(BuildContext context,User actualuser) {
+
+    return showDialog(
+       context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Write your name'),
+            content: TextField(
+              controller: _controllerstatus,
+              decoration: InputDecoration(hintText: actualuser.name),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child:  Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+                FlatButton(
+                child:  Text('SAVE'),
+                onPressed: () {
+                  Firestore.instance.collection('users').document(actualuser.id).updateData({'status': _controllerstatus.text});
+            
+                  Navigator.of(context).pop();
+                },)
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     String userid= this.widget.userid;
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text('Profile')),
       body: StreamBuilder(
         stream: Firestore.instance.collection('users').snapshots(),
@@ -104,7 +128,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                        setState(() => _changeName(context,actual_user));
+                         _changeName(context,actual_user);
                       },
                     )
                   ],
@@ -123,9 +147,9 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                     ),
                     IconButton(
                       icon: Icon(Icons.edit),
-                      onPressed: () {/*
-                        setState(() => _changeStatus(context));
-                     */ },
+                      onPressed: () {
+                     _changeStatus(context,actual_user);
+                     },
                     )
                   ],
                 ),

@@ -4,7 +4,8 @@ import 'package:projecte_visual/Layout/Profile/Profile.dart';
 import 'package:projecte_visual/classes.dart';
 
 class Add_Group extends StatefulWidget {
-  Add_Group(iduser);
+  String userid;
+  Add_Group(this.userid);
 
   @override
   _Add_GroupState createState() => _Add_GroupState();
@@ -21,6 +22,7 @@ class _Add_GroupState extends State<Add_Group> {
   }
 
   Widget build(BuildContext context) {
+    String userid=this.widget.userid;
     return Scaffold(
       appBar: AppBar(title: Text('Add Group')),
       body: Padding(
