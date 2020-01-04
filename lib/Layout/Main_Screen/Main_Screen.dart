@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
         title: Text('Comparte.me'),
         actions: <Widget>[
           //Widget para el desplegable add_group, Delete_group and profile
-          Main_PopupMenu(),
+          Main_PopupMenu(userid: iduser),
         ],
       ),
       //Codigo para la visualizacion del calendario acual

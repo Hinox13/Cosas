@@ -3,8 +3,11 @@ import 'package:projecte_visual/Layout/Add_Group/Add_Group.dart';
 import 'package:projecte_visual/Layout/Profile/Profile.dart';
 
 class Main_PopupMenu extends StatelessWidget {
+  final String userid;
+ 
   const Main_PopupMenu({
     Key key,
+    this.userid
   }) : super(key: key);
 
   @override
@@ -44,7 +47,7 @@ class Main_PopupMenu extends StatelessWidget {
               break;
             case 'Perfil':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile_Screen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile_Screen(userid)));
               }
               break;
             default:

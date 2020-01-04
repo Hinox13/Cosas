@@ -1,14 +1,60 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-String userid = 'kFhr7ukMG6gqXg2Vyzpx'; //En principi un cop fet el loggin rebrem aquest camp
+String userid =
+    'kFhr7ukMG6gqXg2Vyzpx'; //En principi un cop fet el loggin rebrem aquest camp
 
-class Profile_Screen extends StatelessWidget {
+class Profile_Screen extends StatefulWidget {
+  String userid;
+  Profile_Screen(this.userid);
+  @override
+  _Profile_ScreenState createState() => _Profile_ScreenState();
+}
+
+class _Profile_ScreenState extends State<Profile_Screen> {
+  TextEditingController _controllername, _controllerstatus;
+  @override
+  void initState() {
+   _controllername= TextEditingController();
+   _controllerstatus= TextEditingController();
+    super.initState();
+  }
+
+_changeName(BuildContext context,String actualname)async {
+
+    return showDialog(
+       context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Write your name'),
+            content: TextField(
+              controller: _controllername,
+              decoration: InputDecoration(hintText: actualname),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+/*
+  _changeStatus(BuildContext context)async {
+    return showDialog();
+  }*/
+
   @override
   Widget build(BuildContext context) {
+    String userid= this.widget.userid;
     return Scaffold(
       appBar: AppBar(title: Text('Profile')),
       body: StreamBuilder(
@@ -37,11 +83,23 @@ class Profile_Screen extends StatelessWidget {
                   version: QrVersions.auto,
                   size: 250.0,
                 ),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('User Name'),
-                    SizedBox(height: 2),
-                    Text(actual_user.name),
+                    SizedBox(width: 42),
+                    Column(
+                      children: <Widget>[
+                        Text('User Name'),
+                        SizedBox(height: 2),
+                        Text(actual_user.name),
+                      ],
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        setState(() => _changeName(context,actual_user.name));
+                      },
+                    )
                   ],
                 ),
                 Row(
@@ -58,7 +116,9 @@ class Profile_Screen extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(Icons.edit),
-                      onPressed: () {},
+                      onPressed: () {/*
+                        setState(() => _changeStatus(context));
+                     */ },
                     )
                   ],
                 ),
