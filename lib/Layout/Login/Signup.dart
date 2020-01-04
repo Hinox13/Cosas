@@ -8,7 +8,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  String _password, _email;
+  String _password, _email, _name;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -23,6 +23,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           key: formKey,
           child: Column(
             children: <Widget>[
+              TextFormField(
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please, type your nickname';
+                  } else
+                    return null;
+                },
+                onSaved: (input) => _name = input,
+                decoration: InputDecoration(
+                  labelText: 'Nickname',
+                ),
+              ),
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -73,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Firestore.instance
             .collection('users')
             .document(user.uid)
-            .setData({"name": '', "status": ''});
+            .setData({"name": '$_name', "status": 'Sharing is caring!'});
         Navigator.of(context).pop();
       } catch (e) {
         print(e.toString());
