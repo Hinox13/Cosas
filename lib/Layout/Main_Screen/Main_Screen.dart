@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Group_Layout(groups[index].id),
+                    builder: (context) => Group_Layout(groups[index].id, groups[index].name),
                   ));
                 },
                 child: ListTile(
