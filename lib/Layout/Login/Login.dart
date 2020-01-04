@@ -27,12 +27,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 Future<void> signIn()async{
-    final formState= formKey.currentState;
+  FormState formState= formKey.currentState;
   if(formState.validate()){
+    print('valid');
     formState.save();
+    try{
     FirebaseUser user= await FirebaseAuth.instance.signInWithEmailAndPassword(email:_email, password:_password);
-    print(user.providerId);
+    print(user.uid);
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainScreen(user:user)));
+    }catch(e){print(e.toString());}
   }else{print('no valido ${_email}, ${_password}');}
 
 }
@@ -45,45 +48,48 @@ Future<void> signIn()async{
       appBar: AppBar(
         title: Text('Sign in'),
       ),
-      body:Form(
-          key:formKey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-               // controller:  _controlemail,
-                validator:(input) {
-                  if (input.isEmpty) {
-                    return 'Please, type the required email';
-                  }else return null;
-                },
-                onSaved: (input) => _email = input,
-                decoration: InputDecoration(
-                  labelText: 'Email',
+      body:Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+            key:formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                 // controller:  _controlemail,
+                  validator:(input) {
+                    if (input.isEmpty) {
+                      return 'Please, type the required email';
+                    }else return null;
+                  },
+                  onSaved: (input) => _email = input,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-           
-                //controller: _controlpassword,
-                obscureText: true,
-                validator: (input) {
-                  if (input.length >2) {
-                    return 'est';
-                  }else return null;
-                },
-                onSaved: (input) => _password = input,
-                decoration: InputDecoration(
-                  labelText: 'Pasword',
+                SizedBox(height: 10),
+                TextFormField(
+             
+                  //controller: _controlpassword,
+                  obscureText: true,
+                  validator: (input) {
+                    if (input.length <6) {
+                      return 'Please The password needs minimum 6 characters';
+                    }else return null;
+                  },
+                  onSaved: (input) => _password = input,
+                  decoration: InputDecoration(
+                    labelText: 'Pasword',
+                  ),
+                  
                 ),
-                
-              ),
-              RaisedButton(
-                onPressed:signIn,
-                child: Text('Sign in'),
-              ),
-            ],
+                RaisedButton(
+                  onPressed:signIn,
+                  child: Text('Sign in'),
+                ),
+              ],
+            ),
           ),
-        ),
+      ),
       
     );
   }
