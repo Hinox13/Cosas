@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Widgets/Main_popupMenu2.dart';
-import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
+import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
 class Group_Layout extends StatefulWidget {
-  final String idgroup, namegroup;
-  Group_Layout(this.idgroup,this.namegroup);
+  final String idgroup, namegroup, iduser;
+  Group_Layout(this.idgroup,this.namegroup, this.iduser);
   @override
   _Group_LayoutState createState() => _Group_LayoutState();
 }
@@ -17,6 +17,7 @@ class _Group_LayoutState extends State<Group_Layout> {
   Widget build(BuildContext context) {
     String idgroup = this.widget.idgroup;
     String gname = this.widget.namegroup;
+    String iduser= this.widget.iduser;
     return Scaffold(
       appBar: AppBar(
         title: Text(gname),
@@ -33,7 +34,7 @@ class _Group_LayoutState extends State<Group_Layout> {
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => User_Calendar(),
+            builder: (context) => Asset_Calendar(),
           ));
         },
       ),
@@ -56,8 +57,8 @@ class _Group_LayoutState extends State<Group_Layout> {
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => User_Calendar(
-                        idgroup: idgroup, idasset: assets[index].id),
+                    builder: (context) => Asset_Calendar(
+                        idgroup: idgroup, idasset: assets[index].id, iduser: iduser),
                   ));
                 },
                 onLongPress: () {

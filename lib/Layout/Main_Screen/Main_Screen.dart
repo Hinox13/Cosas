@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
-import 'package:projecte_visual/Layout/User_Calendar/User_Calendar.dart';
+import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => User_Calendar(),
+            builder: (context) => Asset_Calendar(),
           ));
         },
       ),
@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Group_Layout(groups[index].id, groups[index].name),
+                    builder: (context) => Group_Layout(groups[index].id, groups[index].name,iduser),
                   ));
                 },
                 child: ListTile(
