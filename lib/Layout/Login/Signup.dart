@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
                 onSaved: (input) => _email = input,
                 decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'E-mail',
                 ),
               ),
               SizedBox(height: 10),
@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
                 onSaved: (input) => _password = input,
                 decoration: InputDecoration(
-                  labelText: 'Pasword',
+                  labelText: 'Password',
                 ),
               ),
               RaisedButton(
