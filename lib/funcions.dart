@@ -64,6 +64,7 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
   Firestore.instance.collection('group').document(idgroup).get().then((doc){
      info=doc['description'];
    });
- 
-  
  }
+
+
+

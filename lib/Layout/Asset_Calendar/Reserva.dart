@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:projecte_visual/classes.dart';
 
-FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, DateTime dayselected) {
+FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, String userid, DateTime dayselected) {
      DateTime initTime;
       DateTime finishTime;
 
@@ -71,7 +71,7 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                 onPressed: () {
                 List<DateTime> t= timeOnDaySelected(initTime,finishTime, dayselected);
                   //List<DateTime> t = [initTime, finishTime];
-                   Event e= Event('estoesunaprueba',assetid,t[0],t[1]);
+                   Event e= Event(userid,assetid,t[0],t[1]);
                    Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);
                 },

@@ -1,23 +1,23 @@
 import 'dart:async';
 import 'dart:core';
-import 'package:projecte_visual/Layout/User_Calendar/Reserva.dart';
+import 'package:projecte_visual/Layout/Asset_Calendar/Reserva.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:projecte_visual/Layout/User_Calendar/AddEvent.dart';
+import 'package:projecte_visual/Layout/Asset_Calendar/AddEvent.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class User_Calendar extends StatefulWidget {
-  String idgroup,idasset;
-  User_Calendar({this.idgroup, this.idasset});
+class Asset_Calendar extends StatefulWidget {
+  String idgroup,idasset,iduser;
+  Asset_Calendar({this.idgroup, this.idasset, this.iduser});
   @override
-  _User_CalendarState createState() => _User_CalendarState();
+  _Asset_CalendarState createState() => _Asset_CalendarState();
 }
 
-class _User_CalendarState extends State<User_Calendar> {
+class _Asset_CalendarState extends State<Asset_Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List> _events = {};
   List _selectedEvents;
@@ -35,17 +35,35 @@ class _User_CalendarState extends State<User_Calendar> {
     super.dispose();
   }
  DateTime select;
+
   @override
   Widget build(BuildContext context) {
     String idgroup=this.widget.idgroup;
     String idasset=this.widget.idasset;
+    String iduser= this.widget.iduser;
+  
+ //////////////////////////////////////////////////////////////////////
 
-   
-
+//Revisar no es guarda el valor de document['name] en name
+//La instancia però es la correcta mireu el DEBUG CONSOLE
+// El problema està en la variable que en algun moment perd la referencia del valor
+//intentar implementar amb les clases
     Widget buildEventList(DateTime select) {
+      
       return ListView(
           children: _selectedEvents.asMap().entries.map((event) {
         int idx = event.key;
+        String name;
+
+      Firestore.instance.collection('users').document('${event.value['userid']}').get().then(
+          (document) {
+            name=document['name'];
+            print(name);
+          });
+        
+
+        print(name);
+        
         return Container(
           decoration: BoxDecoration(
             border: Border.all(width: 0.8),
@@ -53,7 +71,8 @@ class _User_CalendarState extends State<User_Calendar> {
           ),
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           child: ListTile(
-            title: Text(event.value['eventid']),
+            
+            title: Text('$name'),
             onTap: () => print(event.value),
             onLongPress: () {
               setState(() {
@@ -65,6 +84,7 @@ class _User_CalendarState extends State<User_Calendar> {
         );
       }).toList());
     }
+///////////////////////////////////////////////////////////////////////////
 
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +137,7 @@ class _User_CalendarState extends State<User_Calendar> {
           onPressed: () {
             print(select.toString());
             setState(() {
-              inReserve(context,time,idgroup,idasset,select);
+              inReserve(context,time,idgroup,idasset,iduser,select);
             });
           }),
     );
