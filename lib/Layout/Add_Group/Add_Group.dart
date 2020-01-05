@@ -22,7 +22,7 @@ class _Add_GroupState extends State<Add_Group> {
   }
 
   Widget build(BuildContext context) {
-    String userid=this.widget.userid;
+    String userid = this.widget.userid;
     return Scaffold(
       appBar: AppBar(title: Text('Add Group')),
       body: Padding(
@@ -45,29 +45,32 @@ class _Add_GroupState extends State<Add_Group> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 RaisedButton(
-                  child: Text('Add'),
-                  onPressed: () {
+                    child: Text('Add'),
+                    /* onPressed: () {
                   Group newgroup = Group(_controllerName.text,userid,null,[userid],_controllerdescription.text);
                   ///////OPCIO A funciona pero no crea la colleccio assets
                    Firestore.instance.collection('group').add(newgroup.toFirestore());
                     Navigator.of(context).pop();
-                  },
-                  ////////////OPCION B que crec que es mes correcta pero no acabo de trobar el comando
-                  /*
-                   ////////////////////////////////////Aqui es crea el grup////////////////////////////////////////
-                  onPressed: () async {
-                    Group newgroup = Group(_controllerName.text, userid, null,
-                        [userid], _controllerdescription.text);
+                  },*/
+                    ////////////OPCION B que crec que es mes correcta pero no acabo de trobar el comando
 
-                    DocumentReference ref = await Firestore.instance
-                        .collection('group')
-                        .add(newgroup.toFirestore());
-                    Firestore.instance
-                        .collection('group')
-                        .document('$ref')
-                        .collection('assets');
-                    /////////////////////////////////////////////aqui sabem la referencia del grup  pero no se*/
-                ),
+                    ////////////////////////////////////Aqui es crea el grup////////////////////////////////////////
+                    onPressed: () async {
+                      Group newgroup = Group(_controllerName.text, userid, null,
+                          [userid], _controllerdescription.text);
+
+                      DocumentReference ref = await Firestore.instance
+                          .collection('group')
+                          .add(newgroup.toFirestore());
+                      Firestore.instance
+                          .collection('group')
+                          .document('${ref.documentID}')
+                          .collection('assets')
+                          .add({'name': 'The entire ${newgroup.name}'});
+                      print('${ref.documentID}');
+                      Navigator.of(context).pop();
+                      /////////////////////////////////////////////aqui sabem la referencia del grup  pero no se
+                    }),
                 RaisedButton(
                   child: Text('Cancel'),
                   onPressed: () {
