@@ -55,7 +55,7 @@ Future<void> signIn()async{
                   },
                   onSaved: (input) => _email = input,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'E-mail',
                   ),
                 ),
                 SizedBox(height: 10),
@@ -68,7 +68,7 @@ Future<void> signIn()async{
                   },
                   onSaved: (input) => _password = input,
                   decoration: InputDecoration(
-                    labelText: 'Pasword',
+                    labelText: 'Password',
                   ),
                   
                 ),
