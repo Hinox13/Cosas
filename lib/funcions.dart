@@ -66,5 +66,23 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
    });
  }
 
+////////////////////////////////////////////////////////////////////////////////////
+///   Passo la data el nom de la reserva i la llista amb la que visualitzare les reserves//
+///   Miro a la matriu si la data ja existeix, si existeix afegeixo la reserva, si no creo la data i afegeixo
+/// 
+addEvent(DateTime date, Map<String, dynamic> reserve, Map<DateTime, List> events) {
+  print(date);
+  if (events.containsKey(date)) {
+    events[date].add(reserve);
+  } else {
+    events[date] = [reserve];
+  }
+}
 
+//////////////////////////////////////////////////////////////////////////
+///   Petita funcio que crea el dia actual en Datetime i l'inicialitza a les 00:00:00
+DateTime today() {
+  DateTime now = DateTime.now();
+  return DateTime(now.year, now.month, now.day);
+}
 
