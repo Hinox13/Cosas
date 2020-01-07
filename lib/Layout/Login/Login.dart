@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'E-mail',
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 10),
               TextFormField(
                 obscureText: true,
                 validator: (input) {
@@ -74,12 +74,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'Password',
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               RaisedButton(
                 onPressed: signIn,
                 child: Text('Login'),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               RaisedButton(
                 onPressed: () {
                   Navigator.of(context).push(

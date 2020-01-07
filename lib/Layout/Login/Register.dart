@@ -35,7 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'Nickname',
                 ),
               ),
-              SizedBox(height: 10),
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -48,7 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'E-mail',
                 ),
               ),
-              SizedBox(height: 10),
               TextFormField(
                 obscureText: true,
                 validator: (input) {
