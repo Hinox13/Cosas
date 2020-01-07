@@ -6,6 +6,7 @@ import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
+////////////////////EL QUE HI HA EN EL GRUP SELECCIONAT//////////////////////////
 class Group_Layout extends StatefulWidget {
   final String idgroup, namegroup, iduser;
   Group_Layout(this.idgroup, this.namegroup, this.iduser);

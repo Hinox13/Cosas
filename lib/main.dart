@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Login/Login.dart';
-import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 
 
 
