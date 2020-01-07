@@ -15,7 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign in'),
+        title: Text('Registration'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -35,6 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'Nickname',
                 ),
               ),
+              SizedBox(height: 10),
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -61,9 +62,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'Password',
                 ),
               ),
+              SizedBox(height: 10),
               RaisedButton(
                 onPressed: signUp,
-                child: Text('Sign Up'),
+                child: Text('Register'),
               ),
             ],
           ),
