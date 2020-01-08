@@ -33,9 +33,8 @@ class _Group_InfoState extends State<Group_Info>
   Widget build(BuildContext context) {
     String idgroup = this.widget.idgroup;
     String description;
-    List<dynamic> members;
 
-    llistamembres(idgroup, members, description);
+    
 
     return Scaffold(
       appBar: AppBar(title: Text('Group Info')),
@@ -47,7 +46,7 @@ class _Group_InfoState extends State<Group_Info>
             SizedBox(height: 15),
             TextDescription(idgroup: idgroup),
             SizedBox(height: 15),
-            ListMembers(members: members),
+            ListMembers(members: llistamembres(idgroup, description)),
           ],
         ),
       ),
