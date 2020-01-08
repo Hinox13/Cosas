@@ -122,9 +122,6 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                   User(docu.documentID, docu.data['name'], docu.data['status']);
           }
 
-          int number = 0;
-          print(getnumber(userid));
-
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
