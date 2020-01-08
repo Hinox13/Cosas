@@ -60,10 +60,13 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
 //    la matriu de membres                     //
 //    ens permét construir després la llista 
 //    d'usuaris d'aquell grup                  //
- llistamembres(String idgroup, List<dynamic> members, String info){
+ llistamembres(String idgroup,String info){
+   List<String> members;
   Firestore.instance.collection('group').document(idgroup).get().then((doc){
      info=doc['description'];
+     members = doc['members'];
    });
+   return members;
  }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -86,3 +89,12 @@ DateTime today() {
   return DateTime(now.year, now.month, now.day);
 }
 
+quiSom(List<dynamic> idmembres){
+  Map<String,String> hsbl={};
+  for(var penya in idmembres ){
+  Firestore.instance.collection('users').document(penya).get().then((doc){
+     hsbl[penya]= doc['name'];
+   });
+  }
+  return hsbl;
+}
