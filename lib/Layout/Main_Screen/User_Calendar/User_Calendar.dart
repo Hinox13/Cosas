@@ -18,6 +18,7 @@ class _User_CalendarState extends State<User_Calendar> {
   List _selectedEvents;
   List<DateTime> time;
   void initState() {
+    final _selectedDay = today();
     _selectedEvents = _events[today()] ?? [];
     _calendarController = CalendarController();
     super.initState();
@@ -47,20 +48,11 @@ class _User_CalendarState extends State<User_Calendar> {
             .collection('users')
             .document('$iduser')
             .snapshots();
+            print(_selectedEvents);
       //user = User(iduser, document['name'], document['status']);
       return ListView(
         children: _selectedEvents.asMap().entries.map((event) {
         int idx = event.key;
-        String name;
-
-       
-
-        /*Firestore.instance
-            .collection('users')
-            .document('${event.value['userid']}')
-            .snapshots();*/
-        //user = User(iduser, snapshotrealuser.first.['name'], document['status']);
-
         return Container(
           decoration: BoxDecoration(
             border: Border.all(width: 0.8),
@@ -131,7 +123,7 @@ class _User_CalendarState extends State<User_Calendar> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            print(iduser);
+            print(_events);
           }),
     );
   }
