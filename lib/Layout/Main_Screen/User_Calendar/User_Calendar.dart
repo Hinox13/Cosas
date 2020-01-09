@@ -69,9 +69,9 @@ class _User_CalendarState extends State<User_Calendar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                        'Start: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                        'From: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
                     Text(
-                        'Finish: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
+                        'To: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
                     SizedBox(width: 20),
                   ],
                 ),

@@ -57,7 +57,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                   return Center(child: CircularProgressIndicator());
                 }
                 List<DocumentSnapshot> docos =
-                    snapshoti.data.documents; //No ha petao
+                    snapshoti.data.documents; 
                 List<User> users = docaUser_list(docos);
                 for (var user in users) {
                   if (user.id == e['userid']) name = user.name;
@@ -71,15 +71,15 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text('MINDHUNTER'),
+                    title: Text('Reservation'),
                     leading: Text(name),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                            'Start: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                            'From: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
                         Text(
-                            'Finish: ${e['end'].hour}:${e['end'].minute}:${e['end'].second}'),
+                            'To: ${e['end'].hour}:${e['end'].minute}:${e['end'].second}'),
                         SizedBox(width: 20),
                       ],
                     ),
