@@ -43,15 +43,24 @@ class _LoginScreenState extends State<LoginScreen> {
       color: Colors.white,
       theme: ThemeData(primarySwatch: Colors.orange),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Welcome to Comparte.me'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(30.0),
           child: Form(
             key: formKey,
             child: Column(
               children: <Widget>[
+                SizedBox(height: 20,),
+                Container(
+                  height:150,
+                  width: 150,
+                  child: Image.asset('logo/logo.png')
+                ),
+
+                SizedBox(height: 10,),
                 TextFormField(
                   validator: (input) {
                     if (input.isEmpty) {

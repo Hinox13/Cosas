@@ -110,21 +110,24 @@ bool validationReserve(List<DateTime> t, List<dynamic> selectedEvent) {
 
   /////mireu el debug console i veureu com funciona per fer el if////////////
   Map<String, dynamic> x = selectedEvent[0];
-  print(t[0]);
-  print(x['init']);
+if(selectedEvent==[]){validate=true; return validate;}
+else{
+  print(t[1]);
+  print(x['end']);
   print(t[0].compareTo(x['init']));
   print(x['init'].compareTo(x['init']));
   print(x['init'].compareTo(t[0]));
 ////////////////////////////////////////////////////////////////////////////
   for (var seleve in selectedEvent) {
     if (t[0].compareTo(seleve['init']) < 0 ||
-        t[0].compareTo(seleve['finish']) > 0) {
+        t[0].compareTo(seleve['end']) > 0) {
       if (t[1].compareTo(seleve['init']) < 0 ||
-          t[1].compareTo(seleve['finish']) > 0) {
+          t[1].compareTo(seleve['end']) > 0) {
         validate = true;
         return validate;
       }
     }
   }
   return validate;
+}
 }

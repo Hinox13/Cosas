@@ -122,7 +122,7 @@ class ListMembers extends StatelessWidget {
       flex: 2,
       child: StreamBuilder(
         stream: Firestore.instance
-            .collection('users').where('BytA25mHpncD2ZqLsrfsTvukfT43',arrayContains: members[0])
+            .collection('group').where('group', whereIn: members)
             //.where('users',arrayContainsAny: members)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

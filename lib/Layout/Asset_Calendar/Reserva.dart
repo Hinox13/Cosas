@@ -74,7 +74,9 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                   //List<DateTime> t = [initTime, finishTime];
                    Event e= Event(userid,assetid,t[0],t[1]);
                    bool valid = validationReserve(t,selectedEvents);
-                  if(valid){
+              
+                  
+                  if(valid==true){
                    Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);}
                   else{ Navigator.of(context).pop();}
