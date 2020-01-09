@@ -38,56 +38,61 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome to Comparte.me'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please, type the required email';
-                  } else
-                    return null;
-                },
-                onSaved: (input) => _email = input,
-                decoration: InputDecoration(
-                  labelText: 'E-mail',
+    return MaterialApp(
+      title: 'RoomShare',
+      color: Colors.white,
+      theme: ThemeData(primarySwatch: Colors.orange),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Welcome to Comparte.me'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please, type the required email';
+                    } else
+                      return null;
+                  },
+                  onSaved: (input) => _email = input,
+                  decoration: InputDecoration(
+                    labelText: 'E-mail',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                obscureText: true,
-                validator: (input) {
-                  if (input.length < 6) {
-                    return 'Please The password needs minimum 6 characters';
-                  } else
-                    return null;
-                },
-                onSaved: (input) => _password = input,
-                decoration: InputDecoration(
-                  labelText: 'Password',
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  validator: (input) {
+                    if (input.length < 6) {
+                      return 'Please The password needs minimum 6 characters';
+                    } else
+                      return null;
+                  },
+                  onSaved: (input) => _password = input,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              RaisedButton(
-                onPressed: signIn,
-                child: Text('Login'),
-              ),
-              SizedBox(height: 5),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpScreen()));
-                },
-                child: Text('Register'),
-              ),
-            ],
+                SizedBox(height: 10),
+                RaisedButton(
+                  onPressed: signIn,
+                  child: Text('Login'),
+                ),
+                SizedBox(height: 5),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SignUpScreen()));
+                  },
+                  child: Text('Register'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
