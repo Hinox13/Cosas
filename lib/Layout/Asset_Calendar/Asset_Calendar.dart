@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:core';
 import 'package:projecte_visual/Layout/Asset_Calendar/Reserva.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -33,17 +36,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
     super.dispose();
   }
  DateTime select;
-  
-void f(String n)async{
-  
-   await Firestore.instance.collection('users').document('${n}').get().then(
-          (document) {
-            name=document['name'];
-            print(name);
-          });
-        
 
-}
   @override
   Widget build(BuildContext context) {
     String idgroup=this.widget.idgroup;
@@ -84,7 +77,7 @@ Widget buildEventList(DateTime select,List<Event> events) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text('Start: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
-                Text('Finish: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
+                Text('Finish: ${e['end'].hour}:${e['end'].minute}:${e['end'].second}'),
                 SizedBox(width: 20),
               ],
             ),
@@ -102,8 +95,6 @@ Widget buildEventList(DateTime select,List<Event> events) {
      } ,
   );
 }
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Reserve Calendar'),
@@ -121,15 +112,10 @@ Widget buildEventList(DateTime select,List<Event> events) {
           List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
           List<Event> events = docaEvent_list(docs);
           _events.clear();
-         /* for (var eve in events){
-            DateTime t= xA(eve.init);
-            addEvent(t,{'userid': eve.userid, 'eventid': eve.eventid}, _events);
-          }*/
 
            for (var eve in events){
             addEvent(yearmonthday(eve.init),{'userid': eve.userid, 'eventid': eve.eventid, 'init': eve.init ,'end':eve.end}, _events);
           }
-          //print(_events);
        
           return Column(children: <Widget>[
             TableCalendar(
@@ -170,4 +156,3 @@ Widget buildEventList(DateTime select,List<Event> events) {
   }
 
 }
-

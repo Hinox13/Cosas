@@ -48,7 +48,7 @@ class _Group_InfoState extends State<Group_Info>
             SizedBox(height: 15),
             TextDescription(idgroup: id, groupdescription: description),
             SizedBox(height: 15),
-            ListMembers(members: llistamembres(idgroup, description)),
+            ListMembers(members: members),
           ],
         ),
       ),
@@ -136,6 +136,7 @@ class ListMembers extends StatelessWidget {
           return ListView.builder(
             itemCount:users.length,
             itemBuilder: (context, index) {
+              
               return InkWell(
                 onTap: () {
                   showDialog(

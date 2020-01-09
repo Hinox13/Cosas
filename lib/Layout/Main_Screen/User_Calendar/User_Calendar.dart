@@ -17,6 +17,7 @@ class _User_CalendarState extends State<User_Calendar> {
   Map<DateTime, List> _events = {};
   List _selectedEvents;
   List<DateTime> time;
+  String name;
   void initState() {
     final _selectedDay = today();
     _selectedEvents = _events[today()] ?? [];
@@ -35,45 +36,60 @@ class _User_CalendarState extends State<User_Calendar> {
   @override
   Widget build(BuildContext context) {
     String iduser = this.widget.iduser;
-    //////////////////////////////////////////////////////////////////////
 
-//Revisar no es guarda el valor de document['name] en name
-//La instancia però es la correcta mireu el DEBUG CONSOLE
-// El problema està en la variable que en algun moment perd la referencia del valor
-//intentar implementar amb les clases
-    Widget buildEventList(DateTime select) {
-      User user;
-     // DocumentSnapshot useractual = Firestore.instance.collection('users').document('${event.value['userid']}').snapshots();
-       Firestore.instance
-            .collection('users')
-            .document('$iduser')
-            .snapshots();
-            print(_selectedEvents);
-      //user = User(iduser, document['name'], document['status']);
-      return ListView(
-        children: _selectedEvents.asMap().entries.map((event) {
-        int idx = event.key;
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: ListTile(
-            title: Text('${event.value}'),
-            onTap: () => print(event.value),
-            onLongPress: () {
-              setState(() {
-                _selectedEvents.removeAt(idx);
-                Firestore.instance
-                    .collection('event')
-                    .document(event.value['eventid'])
-                    .delete();
-              });
-            },
-          ),
-        );
-      }).toList());
+    Widget buildEventList(DateTime select, List<Event> events) {
+      return ListView.builder(
+        itemCount: _selectedEvents.length,
+        itemBuilder: (context, index) {
+          dynamic e = _selectedEvents[index];
+          //document(e['userid'])
+          return StreamBuilder(
+            stream: Firestore.instance.collection('users').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshoti) {
+            if (!snapshoti.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+          List<DocumentSnapshot> docos = snapshoti.data.documents; //No ha petao
+          List<User> users = docaUser_list(docos);
+           for (var user in users){
+            if(user.id == e['userid']) name = user.name;
+           }
+            return Container(
+              height: 70,
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.8),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: ListTile(
+                title: Text('Reservation'),
+                leading: Text(name),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                        'Start: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                    Text(
+                        'Finish: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
+                    SizedBox(width: 20),
+                  ],
+                ),
+                onTap: () => print(e),
+                onLongPress: () {
+                  setState(() {
+                    _selectedEvents.removeAt(index);
+                    Firestore.instance
+                        .collection('event')
+                        .document(e['eventid'])
+                        .delete();
+                  });
+                },
+              ),
+            );
+          });
+        },
+      );
     }
 ///////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +111,15 @@ class _User_CalendarState extends State<User_Calendar> {
           List<Event> events = docaEvent_list(docs);
           _events.clear();
           for (var eve in events) {
-            addEvent(eve.init,  '${eve.userid} from ${eve.init} to ${eve.end}', _events);
+            addEvent(
+                yearmonthday(eve.init),
+                {
+                  'userid': eve.userid,
+                  'eventid': eve.eventid,
+                  'init': eve.init,
+                  'end': eve.end
+                },
+                _events);
           }
 
           return Column(children: <Widget>[
@@ -115,7 +139,7 @@ class _User_CalendarState extends State<User_Calendar> {
               },
             ),
             const SizedBox(height: 8.0),
-            Expanded(child: buildEventList(select)),
+            Expanded(child: buildEventList(select, events)),
           ]);
         },
       ),
