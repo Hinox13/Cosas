@@ -40,7 +40,7 @@ class Main_PopupMenu2 extends StatelessWidget {
         //Creacion de que hacer con el valor obtenido
         onSelected: (value) {
           switch (value) {
-            case 'Afegir ':
+            case 'Afegir':
               {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddUser()));
               }
@@ -60,4 +60,4 @@ class Main_PopupMenu2 extends StatelessWidget {
           }
         });
   }
-}
+} 
