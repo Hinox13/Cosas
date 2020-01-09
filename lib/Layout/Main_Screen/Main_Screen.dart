@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
+import 'package:projecte_visual/Layout/Main_Screen/User_Calendar/User_Calendar.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
 import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
@@ -39,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Asset_Calendar(),
+              builder: (context) => User_Calendar(iduser: iduser),
             ));
           },
         ),

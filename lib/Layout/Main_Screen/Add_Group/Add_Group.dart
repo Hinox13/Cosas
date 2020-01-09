@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projecte_visual/Layout/Profile/Profile.dart';
 import 'package:projecte_visual/classes.dart';
 
 class Add_Group extends StatefulWidget {

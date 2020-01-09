@@ -60,22 +60,25 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
 //    la matriu de membres                     //
 //    ens permét construir després la llista 
 //    d'usuaris d'aquell grup                  //
- llistamembres(String idgroup, List<dynamic> members, String info){
+ llistamembres(String idgroup,String info){
+   List<String> members;
   Firestore.instance.collection('group').document(idgroup).get().then((doc){
      info=doc['description'];
+     members = doc['members'];
    });
+   return members;
  }
 
 ////////////////////////////////////////////////////////////////////////////////////
 ///   Passo la data el nom de la reserva i la llista amb la que visualitzare les reserves//
 ///   Miro a la matriu si la data ja existeix, si existeix afegeixo la reserva, si no creo la data i afegeixo
 /// 
-addEvent(DateTime date, Map<String, dynamic> reserve, Map<DateTime, List> events) {
-  print(date);
-  if (events.containsKey(date)) {
-    events[date].add(reserve);
+addEvent(DateTime date, String reserve, Map<DateTime, List> events) {
+DateTime dating = new DateTime.utc(date.year,date.month,date.day);
+  if (events.containsKey(dating)) {
+    events[dating].add(reserve);
   } else {
-    events[date] = [reserve];
+    events[dating] = [reserve];
   }
 }
 

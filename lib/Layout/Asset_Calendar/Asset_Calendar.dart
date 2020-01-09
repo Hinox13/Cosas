@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:core';
 import 'package:projecte_visual/Layout/Asset_Calendar/Reserva.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 import 'package:table_calendar/table_calendar.dart';
 

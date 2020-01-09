@@ -1,9 +1,9 @@
 
+
 import 'package:flutter/material.dart';
-import 'package:projecte_visual/Layout/Add_Asset/Add_Asset.dart';
-import 'package:projecte_visual/Layout/Add_Group/Add_Group.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Info/Group_Info.dart';
 import 'package:projecte_visual/classes.dart';
+
 
 class Main_PopupMenu2 extends StatelessWidget {
  final String iduser;//id del group on estem

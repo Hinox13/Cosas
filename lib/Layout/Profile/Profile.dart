@@ -17,15 +17,24 @@ class _Profile_ScreenState extends State<Profile_Screen> {
   TextEditingController _controllername, _controllerstatus;
   @override
   void initState() {
-   _controllername= TextEditingController();
-   _controllerstatus= TextEditingController();
+    _controllername = TextEditingController();
+    _controllerstatus = TextEditingController();
     super.initState();
   }
 
-  FutureOr _changeName(BuildContext context,User actualuser) {
+  Future getnumber(String userid) async {
+    var respectsQuery = Firestore.instance
+        .collection('group')
+        .where('members', arrayContains: userid);
+    var querySnapshot = await respectsQuery.getDocuments();
+    var totalEquals = querySnapshot.documents.length;
+    print(totalEquals);
+    return totalEquals;
+  }
 
+  FutureOr _changeName(BuildContext context, User actualuser) {
     return showDialog(
-       context: context,
+        context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Write your name'),
@@ -35,48 +44,55 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             ),
             actions: <Widget>[
               FlatButton(
-                child:  Text('CANCEL'),
+                child: Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-                FlatButton(
-                child:  Text('SAVE'),
+              FlatButton(
+                child: Text('SAVE'),
                 onPressed: () {
-                  Firestore.instance.collection('users').document(actualuser.id).updateData({'name': _controllername.text});
-            
+                  Firestore.instance
+                      .collection('users')
+                      .document(actualuser.id)
+                      .updateData({'name': _controllername.text});
+
                   Navigator.of(context).pop();
-                },)
+                },
+              )
             ],
           );
         });
   }
 
-  FutureOr _changeStatus(BuildContext context,User actualuser) {
-
+  FutureOr _changeStatus(BuildContext context, User actualuser) {
     return showDialog(
-       context: context,
+        context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Write your name'),
             content: TextField(
               controller: _controllerstatus,
-              decoration: InputDecoration(hintText: actualuser.name),
+              decoration: InputDecoration(hintText: actualuser.status),
             ),
             actions: <Widget>[
               FlatButton(
-                child:  Text('CANCEL'),
+                child: Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-                FlatButton(
-                child:  Text('SAVE'),
+              FlatButton(
+                child: Text('SAVE'),
                 onPressed: () {
-                  Firestore.instance.collection('users').document(actualuser.id).updateData({'status': _controllerstatus.text});
-            
+                  Firestore.instance
+                      .collection('users')
+                      .document(actualuser.id)
+                      .updateData({'status': _controllerstatus.text});
+
                   Navigator.of(context).pop();
-                },)
+                },
+              )
             ],
           );
         });
@@ -84,7 +100,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    String userid= this.widget.userid;
+    String userid = this.widget.userid;
+    dynamic numbergroups = getnumber(userid);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text('Profile')),
@@ -95,6 +112,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
+
           List<User> user_list;
           user_list = docaUser_list(docs);
           User actual_user;
@@ -128,7 +146,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                         _changeName(context,actual_user);
+                        _changeName(context, actual_user);
                       },
                     )
                   ],
@@ -148,8 +166,8 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                     _changeStatus(context,actual_user);
-                     },
+                        _changeStatus(context, actual_user);
+                      },
                     )
                   ],
                 ),
@@ -157,12 +175,34 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                   children: <Widget>[
                     Text('Number of groups'),
                     SizedBox(height: 2),
-                    Text('REVISAR'),
+                    StreamBuilder(
+                        stream: Firestore.instance
+                            .collection('group')
+                            .where('members', arrayContains: userid)
+                            .snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshoti) {
+                          if (!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          List<DocumentSnapshot> docsi = snapshoti.data.documents;
+                         numbergroups= docsi.length;
+                          return Text('$numbergroups');
+                        }),
                   ],
                 ),
               ],
             ),
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          getnumber(userid);
         },
       ),
     );
