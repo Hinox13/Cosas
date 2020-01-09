@@ -181,7 +181,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
           onPressed: () {
             print(select.toString());
             setState(() {
-              inReserve(context, time, idgroup, idasset, iduser, select);
+              inReserve(context, time, idgroup, idasset, iduser, select, _selectedEvents);
             });
           }),
     );

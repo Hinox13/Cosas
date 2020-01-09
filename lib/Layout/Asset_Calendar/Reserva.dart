@@ -5,8 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:projecte_visual/classes.dart';
+import 'package:projecte_visual/funcions.dart';
 
-FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, String userid, DateTime dayselected) {
+FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, String userid, DateTime dayselected,List<dynamic>selectedEvents) {
      DateTime initTime;
       DateTime finishTime;
 
@@ -72,8 +73,11 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                 List<DateTime> t= timeOnDaySelected(initTime,finishTime, dayselected);
                   //List<DateTime> t = [initTime, finishTime];
                    Event e= Event(userid,assetid,t[0],t[1]);
+                   bool valid = validationReserve(t,selectedEvents);
+                  if(valid){
                    Firestore.instance.collection('event').add(e.toFirestore());
-                  Navigator.of(context).pop(t);
+                  Navigator.of(context).pop(t);}
+                  else{ Navigator.of(context).pop();}
                 },
               ),
               FlatButton(
