@@ -86,3 +86,22 @@ DateTime today() {
   return DateTime(now.year, now.month, now.day);
 }
 
+
+////////////////////////////////////////////////////////
+/// FUNCIÓ PER TENIR NOMÉS TENIR LA DATA (Year:Month,Day)
+ DateTime  yearmonthday(DateTime t){
+            return DateTime(t.year,t.month,t.day);
+          }
+
+///////////////////////////////////////////////////
+/// Funció per simplifacar qui ha fet la reserva
+/* està en procés
+Map<String,String> who(List<User> userlist){
+
+    userlist['userid']: 
+
+  
+
+}
+
+*/

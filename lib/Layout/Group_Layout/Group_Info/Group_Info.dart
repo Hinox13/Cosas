@@ -7,8 +7,9 @@ import 'package:projecte_visual/funcions.dart';
 ///   Scaffold del Group_Info  ////////////////
 
 class Group_Info extends StatefulWidget {
-  final String idgroup;
-  Group_Info(this.idgroup);
+  final String iduser;
+   Group group;
+  Group_Info({this.iduser, this.group});
   @override
   _Group_InfoState createState() => _Group_InfoState();
 }
@@ -31,11 +32,11 @@ class _Group_InfoState extends State<Group_Info>
 
   @override
   Widget build(BuildContext context) {
-    String idgroup = this.widget.idgroup;
-    String description;
-    List<dynamic> members;
-
-    llistamembres(idgroup, members, description);
+    String id = this.widget.group.id;
+    String description = this.widget.group.description;
+    List<dynamic> members = this.widget.group.user_list;
+    //print(members);
+    //llistamembres(idgroup, members, description);
 
     return Scaffold(
       appBar: AppBar(title: Text('Group Info')),
@@ -45,7 +46,7 @@ class _Group_InfoState extends State<Group_Info>
           children: <Widget>[
             TitleDescription(),
             SizedBox(height: 15),
-            TextDescription(idgroup: idgroup),
+            TextDescription(idgroup: id, groupdescription: description),
             SizedBox(height: 15),
             ListMembers(members: members),
           ],
@@ -64,19 +65,26 @@ class TitleDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Group Description',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),);
+    return Center(
+      child: Text(
+        'Group Description',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }
 
 ///////////////////////////////////////////////////////////
 /// Text de descripció del firebase////////////////////////
 class TextDescription extends StatelessWidget {
-  const TextDescription({
+  String idgroup;
+  String groupdescription;
+
+  TextDescription({
     Key key,
     @required this.idgroup,
+    @required this.groupdescription,
   }) : super(key: key);
-
-  final String idgroup;
 
   @override
   Widget build(BuildContext context) {
@@ -85,27 +93,10 @@ class TextDescription extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Container(
-          height: 10,
-          child: StreamBuilder(
-            stream: Firestore.instance.collection('group').snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
-              }
-              List<DocumentSnapshot> docs = snapshot.data.documents;
-              int index;
-              for (int i = 0; i < docs.length; i++) {
-                //No he trobat forma per accedir directament a la descripció del group amb el Stream Builder
-                if (docs[i].documentID == idgroup) index = i;
-              }
-              return Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Text(docs[index].data['description']),
-                  ));
-            },
+          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(groupdescription),
           ),
         ),
       ),
@@ -117,50 +108,53 @@ class TextDescription extends StatelessWidget {
 ///   LLista dels membres del grup seleccionat   ////////////////
 
 class ListMembers extends StatelessWidget {
-  const ListMembers({
+   List<dynamic> members;
+
+   ListMembers({
     Key key,
     @required this.members,
   }) : super(key: key);
 
-  final List members;
-
   @override
   Widget build(BuildContext context) {
+    //members.add('OQQkPrCOGWUau2APBMrSpDWTGTp1');
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: StreamBuilder(
         stream: Firestore.instance
-            .collection('group')
-            .where('users', arrayContains: members)
+            .collection('users').where('BytA25mHpncD2ZqLsrfsTvukfT43',arrayContains: members[0])
+            //.where('users',arrayContainsAny: members)
             .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
+          print(docs[0]);
           List<User> users = docaUser_list(docs);
+         
           return ListView.builder(
-            itemCount: users.length,
+            itemCount:users.length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                        contentPadding: EdgeInsets.all(20),
-                        title: Text('Status of ${users[index].name}'),
-                        content: 
-                      
-                 Container(height: 250,
-                          width: 300,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black87)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal:15.0, vertical:15),
-                              child: Text(users[index].status),
-                            ),
-                          
-                        )),
+                      contentPadding: EdgeInsets.all(20),
+                      title: Text('Status of ${users[index].name}'),
+                      content: Container(
+                        height: 250,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black87)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 15),
+                          child: Text(users[index].status),
+                        ),
+                      ),
+                    ),
                   );
                 },
                 child: ListTile(
@@ -175,7 +169,8 @@ class ListMembers extends StatelessWidget {
                   subtitle: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      users[index].status, overflow: TextOverflow.ellipsis,
+                      users[index].status,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

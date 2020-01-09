@@ -10,7 +10,7 @@ import 'package:projecte_visual/funcions.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Asset_Calendar extends StatefulWidget {
-  String idgroup,idasset,iduser;
+  final String idgroup,idasset,iduser;
   Asset_Calendar({this.idgroup, this.idasset, this.iduser});
   @override
   _Asset_CalendarState createState() => _Asset_CalendarState();
@@ -19,12 +19,14 @@ class Asset_Calendar extends StatefulWidget {
 class _Asset_CalendarState extends State<Asset_Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List> _events = {};
-  List _selectedEvents;
+  List<dynamic> _selectedEvents;
   List<DateTime>time;
+   String name;
   void initState() {
     final _selectedDay = today();
      _selectedEvents = _events[today()] ?? [];
     _calendarController = CalendarController();
+
     super.initState();
   }
 
@@ -34,7 +36,17 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
     super.dispose();
   }
  DateTime select;
+  
+void f(String n)async{
+  
+   await Firestore.instance.collection('users').document('${n}').get().then(
+          (document) {
+            name=document['name'];
+            print(name);
+          });
+        
 
+}
   @override
   Widget build(BuildContext context) {
     String idgroup=this.widget.idgroup;
@@ -42,48 +54,58 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
     String iduser= this.widget.iduser;
   
  //////////////////////////////////////////////////////////////////////
+void x(dynamic e)async{
+   await Firestore.instance.collection('users').document(e['userid']).get().then((doc){
+name=doc['name'];
+      });
+}
 
-//Revisar no es guarda el valor de document['name] en name
-//La instancia però es la correcta mireu el DEBUG CONSOLE
-// El problema està en la variable que en algun moment perd la referencia del valor
-//intentar implementar amb les clases
-    Widget buildEventList(DateTime select) {
-      
-      return ListView(
-          children: _selectedEvents.asMap().entries.map((event) {
-        int idx = event.key;
-        String name;
+          
+Widget buildEventList(DateTime select,List<Event> events) {
 
-      Firestore.instance.collection('users').document('${event.value['userid']}').get().then(
-          (document) {
-            name=document['name'];
-            print(name);
-          });
-        
+  return ListView.builder(
+    
+     itemCount: _selectedEvents.length,
+     itemBuilder: (context, index) {
+  
+      dynamic e=_selectedEvents[index];
 
-        print(name);
-        
+    
+     x(e);
         return Container(
+          height: 70,
           decoration: BoxDecoration(
             border: Border.all(width: 0.8),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+
           child: ListTile(
-            
-            title: Text('$name'),
-            onTap: () => print(event.value),
+            title:Text('MINDHUNTER'), 
+            leading:Text(name),
+            subtitle:Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Start: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                Text('Finish: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
+                SizedBox(width: 20),
+              ],
+            ),
+            onTap: () => print(e),
             onLongPress: () {
               setState(() {
-                _selectedEvents.removeAt(idx);
-                Firestore.instance.collection('event').document(event.value['eventid']).delete();
+               _selectedEvents.removeAt(index);
+               Firestore.instance.collection('event').document(e['eventid']).delete();
               });
             },
+          
           ),
-        );
-      }).toList());
-    }
-///////////////////////////////////////////////////////////////////////////
+
+       );
+     } ,
+  );
+}
+
 
     return Scaffold(
       appBar: AppBar(
@@ -102,10 +124,16 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
           List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
           List<Event> events = docaEvent_list(docs);
           _events.clear();
-          for (var eve in events){
-            addEvent(eve.init,{'userid': eve.userid, 'eventid': eve.eventid}, _events);
-          }
+         /* for (var eve in events){
+            DateTime t= xA(eve.init);
+            addEvent(t,{'userid': eve.userid, 'eventid': eve.eventid}, _events);
+          }*/
 
+           for (var eve in events){
+            addEvent(yearmonthday(eve.init),{'userid': eve.userid, 'eventid': eve.eventid, 'init': eve.init ,'end':eve.end}, _events);
+          }
+          //print(_events);
+       
           return Column(children: <Widget>[
             TableCalendar(
               calendarController: _calendarController,
@@ -115,19 +143,19 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                 selectedColor: Colors.pink,
               ),
               onDaySelected: (date, events) {
-              
+                select = date;
                
-                print(events);
+                print(_selectedEvents);
                 setState(() {
-                    select = date;
-                     print(select.toString());
                   _selectedEvents = events;
+
                 }); //FIREBASE: En aquesta part es descargarn els events que te guardat el asset seleccionat. Com que tenim la variable date que ens diu el dia
                 //en format DateTame només s'haurà de filtrar
               },
             ),
             const SizedBox(height: 8.0),
-            Expanded(child: buildEventList(select)),
+            Expanded(flex:2,
+              child: buildEventList(select, events)),
           ]);
         },
       ),
@@ -140,5 +168,9 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
             });
           }),
     );
+
+   
   }
+
 }
+

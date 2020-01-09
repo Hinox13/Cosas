@@ -8,8 +8,9 @@ import 'package:projecte_visual/funcions.dart';
 
 ////////////////////EL QUE HI HA EN EL GRUP SELECCIONAT//////////////////////////
 class Group_Layout extends StatefulWidget {
-  final String idgroup, namegroup, iduser;
-  Group_Layout(this.idgroup, this.namegroup, this.iduser);
+  final String iduser;
+  Group group;
+  Group_Layout({this.iduser, this.group});
   @override
   _Group_LayoutState createState() => _Group_LayoutState();
 }
@@ -17,15 +18,19 @@ class Group_Layout extends StatefulWidget {
 class _Group_LayoutState extends State<Group_Layout> {
   @override
   Widget build(BuildContext context) {
-    String idgroup = this.widget.idgroup;
-    String gname = this.widget.namegroup;
-    String iduser = this.widget.iduser;
+    String idgroup = this.widget.group.id;
+    String gname= this.widget.group.name;
+     String iduser = this.widget.iduser;
+    Group group = this.widget.group;
+   
+   
     return Scaffold(
       appBar: AppBar(
         title: Text(gname),
         actions: <Widget>[
           //Widget para el desplegable add_group, Delete_group and profile
-          Main_PopupMenu2(id: idgroup),
+          Main_PopupMenu2(iduser:iduser, group: group ),
+         
         ],
       ),
       //Codigo para la visualizacion del calendario acual

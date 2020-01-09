@@ -18,6 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     String iduser = this.widget.user.uid;
+    //Map<String,String> whos;
     return MaterialApp(
       title: 'RoomShare',
       color: Colors.white,
@@ -53,14 +54,15 @@ class _MainScreenState extends State<MainScreen> {
             }
             List<DocumentSnapshot> docs = snapshot.data.documents;
             List<Group> groups = docaGrup_list(docs);
+           
             return ListView.builder(
               itemCount: groups.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                     //whos=who(groups[index].user_list);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Group_Layout(
-                          groups[index].id, groups[index].name, iduser),
+                      builder: (context) => Group_Layout( iduser: iduser,group: groups[index]),
                     ));
                   },
                   child: ListTile(

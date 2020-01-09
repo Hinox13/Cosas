@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Add_Asset/Add_Asset.dart';
 import 'package:projecte_visual/Layout/Add_Group/Add_Group.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Info/Group_Info.dart';
+import 'package:projecte_visual/classes.dart';
 
 class Main_PopupMenu2 extends StatelessWidget {
- final String id;//id del group on estem
- const  Main_PopupMenu2( {
-    this.id,
+ final String iduser;//id del group on estem
+  Group group;
+   Main_PopupMenu2( {
+    this.iduser,
+    this.group,
      Key key,
   }) : super(key: key);
 
@@ -48,7 +51,7 @@ class Main_PopupMenu2 extends StatelessWidget {
               break;
             case 'Info':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Info(id)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Group_Info(iduser: iduser ,group: group)));
               }
               break;
             default:
