@@ -56,8 +56,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                 if (!snapshoti.hasData) {
                   return Center(child: CircularProgressIndicator());
                 }
-                List<DocumentSnapshot> docos =
-                    snapshoti.data.documents; 
+                List<DocumentSnapshot> docos = snapshoti.data.documents;
                 List<User> users = docaUser_list(docos);
                 for (var user in users) {
                   if (user.id == e['userid']) name = user.name;
@@ -85,13 +84,37 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                     ),
                     onTap: () => print(e),
                     onLongPress: () {
-                      setState(() {
-                        _selectedEvents.removeAt(index);
-                        Firestore.instance
-                            .collection('event')
-                            .document(e['eventid'])
-                            .delete();
-                      });
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          title: Text('Delete Events'),
+                          content: Text(
+                              'Are you sure you want to DELETE THE CLICKED EVENT?'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
+                                  _selectedEvents.removeAt(index);
+                                  Firestore.instance
+                                      .collection('event')
+                                      .document(e['eventid'])
+                                      .delete();
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      );
                     },
                   ),
                 );
