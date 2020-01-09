@@ -60,7 +60,7 @@ class _User_CalendarState extends State<User_Calendar> {
           ),
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           child: ListTile(
-            title: Text('$iduser'),
+            title: Text('${event.value}'),
             onTap: () => print(event.value),
             onLongPress: () {
               setState(() {
@@ -95,8 +95,7 @@ class _User_CalendarState extends State<User_Calendar> {
           List<Event> events = docaEvent_list(docs);
           _events.clear();
           for (var eve in events) {
-            addEvent(eve.init, {'userid': eve.userid, 'eventid': eve.eventid},
-                _events);
+            addEvent(eve.init,  '${eve.userid} from ${eve.init} to ${eve.end}', _events);
           }
 
           return Column(children: <Widget>[

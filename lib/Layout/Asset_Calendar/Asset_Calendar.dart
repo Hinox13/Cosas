@@ -100,7 +100,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
           List<Event> events = docaEvent_list(docs);
           _events.clear();
           for (var eve in events){
-            addEvent(eve.init,{'userid': eve.userid, 'eventid': eve.eventid}, _events);
+            addEvent(eve.init,  '${eve.userid} ${eve.eventid}', _events);
           }
 
           return Column(children: <Widget>[

@@ -73,7 +73,7 @@ List<Asset> getAssets(List<DocumentSnapshot> docs){
 ///   Passo la data el nom de la reserva i la llista amb la que visualitzare les reserves//
 ///   Miro a la matriu si la data ja existeix, si existeix afegeixo la reserva, si no creo la data i afegeixo
 /// 
-addEvent(DateTime date, Map<String, dynamic> reserve, Map<DateTime, List> events) {
+addEvent(DateTime date, String reserve, Map<DateTime, List> events) {
 DateTime dating = new DateTime.utc(date.year,date.month,date.day);
   if (events.containsKey(dating)) {
     events[dating].add(reserve);
