@@ -105,28 +105,19 @@ DateTime yearmonthday(DateTime t) {
 ////////////////////////////////////////////////////////
 ///
 
-bool validationReserve(List<DateTime> t, List<dynamic> selectedEvent) {
+bool validationReserve(List<DateTime> nou, List<dynamic> selectedEvent) {
   bool validate = true;
-
-  /////mireu el debug console i veureu com funciona per fer el if////////////
-  Map<String, dynamic> x = selectedEvent[0];
-  if (selectedEvent.isEmpty) {
-    validate = true;
+  if(nou[0] == nou[1] || nou[0].isAfter(nou[1])){
+    return false;}
+  if (selectedEvent == []) {
     return validate;
-  } else {
-    print(t[1]);
-    print(x['end']);
-    print(t[0].compareTo(x['init']));
-    print(x['init'].compareTo(x['init']));
-    print(x['init'].compareTo(t[0]));
-////////////////////////////////////////////////////////////////////////////
-// NOMES FUNCIONA SI EL EVENT ES DINS D'UN ALTRE. NO FUNCIONA SI NOMES TREPITJA LES HORES PARCIALMENT (DAVANT O DARRERE)
-    for (var seleve in selectedEvent) {
-      if (t[0].compareTo(seleve['init']) > 0) {
-        if (t[1].compareTo(seleve['end']) < 0) {
+  } 
+  else {
+      for (var vell in selectedEvent) {
+        if( vell['end'].isAfter(nou[0]) && vell['init'].isBefore(nou[1])){
           validate = false;
+          print('overlap');
         }
-      }
     }
   }
   return validate;
