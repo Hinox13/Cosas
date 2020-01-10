@@ -80,9 +80,9 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                   if(valid==true){
                    Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);}
-                  if(valid == false){
-                    // AQUI VA EL TOAST DIENT QUE EL FORMAT ESTA MAL
-                  }
+                  // if(valid == false){
+                  //   Navigator.of(context).pop(t);
+                  // }
                   else{ Navigator.of(context).pop();}
                 },
               ),
