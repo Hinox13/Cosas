@@ -85,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Firestore.instance
             .collection('users')
             .document(user.uid)
-            .setData({"name": '$_name', "status": 'Sharing is caring!'});
+            .setData({"group": FieldValue.arrayUnion([]),"name": '$_name', "status": 'Sharing is caring!'});
         Navigator.of(context).pop();
       } catch (e) {
         print(e.toString());
