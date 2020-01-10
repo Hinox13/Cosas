@@ -106,28 +106,28 @@ DateTime yearmonthday(DateTime t) {
 ///
 
 bool validationReserve(List<DateTime> t, List<dynamic> selectedEvent) {
-  bool validate = false;
+  bool validate = true;
 
   /////mireu el debug console i veureu com funciona per fer el if////////////
   Map<String, dynamic> x = selectedEvent[0];
-if(selectedEvent==[]){validate=true; return validate;}
-else{
-  print(t[1]);
-  print(x['end']);
-  print(t[0].compareTo(x['init']));
-  print(x['init'].compareTo(x['init']));
-  print(x['init'].compareTo(t[0]));
+  if (selectedEvent.isEmpty) {
+    validate = true;
+    return validate;
+  } else {
+    print(t[1]);
+    print(x['end']);
+    print(t[0].compareTo(x['init']));
+    print(x['init'].compareTo(x['init']));
+    print(x['init'].compareTo(t[0]));
 ////////////////////////////////////////////////////////////////////////////
-  for (var seleve in selectedEvent) {
-    if (t[0].compareTo(seleve['init']) < 0 ||
-        t[0].compareTo(seleve['end']) > 0) {
-      if (t[1].compareTo(seleve['init']) < 0 ||
-          t[1].compareTo(seleve['end']) > 0) {
-        validate = true;
-        return validate;
+// NOMES FUNCIONA SI EL EVENT ES DINS D'UN ALTRE. NO FUNCIONA SI NOMES TREPITJA LES HORES PARCIALMENT (DAVANT O DARRERE)
+    for (var seleve in selectedEvent) {
+      if (t[0].compareTo(seleve['init']) > 0) {
+        if (t[1].compareTo(seleve['end']) < 0) {
+          validate = false;
+        }
       }
     }
   }
   return validate;
-}
 }
