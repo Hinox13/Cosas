@@ -38,7 +38,7 @@ class _AddUserState extends State<AddUser> {
                 child: 
                 Image.memory(bytes),
               ),
-              RaisedButton(onPressed:(){_scan(idgru);}),
+              RaisedButton(onPressed:(){_scan(idgru);}, child: Text("CamScanner")),
               RaisedButton(onPressed: _scanPhoto, child: Text("Escanejar QR des de la galeria")),
             ],
           ),
