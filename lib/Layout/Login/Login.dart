@@ -53,14 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
             key: formKey,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 20,),
                 Container(
-                  height:150,
-                  width: 150,
+                  height:75,
+                  width: 75,
                   child: Image.asset('logo/logo.png')
                 ),
-
-                SizedBox(height: 10,),
                 TextFormField(
                   validator: (input) {
                     if (input.isEmpty) {

@@ -106,21 +106,18 @@ class _Profile_ScreenState extends State<Profile_Screen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text('Profile')),
       body: StreamBuilder(
-        stream: Firestore.instance.collection('users').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        stream:
+            Firestore.instance.collection('users').document(userid).snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
-          List<DocumentSnapshot> docs = snapshot.data.documents;
-
-          List<User> user_list;
-          user_list = docaUser_list(docs);
-          User actual_user;
-          for (var docu in docs) {
-            if (docu.documentID == userid)
-              actual_user =
-                  User(docu.documentID, docu.data['name'], docu.data['status']);
-          }
+          DocumentSnapshot docu = snapshot.data;
+          User actual_user = User(
+            docu.documentID,
+            docu.data['name'],
+            docu.data['status'],
+          );
 
           return Center(
             child: Column(
@@ -185,8 +182,9 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           if (!snapshot.hasData) {
                             return Center(child: CircularProgressIndicator());
                           }
-                          List<DocumentSnapshot> docsi = snapshoti.data.documents;
-                         numbergroups= docsi.length;
+                          List<DocumentSnapshot> docsi =
+                              snapshoti.data.documents;
+                          numbergroups = docsi.length;
                           return Text('$numbergroups');
                         }),
                   ],
