@@ -122,3 +122,11 @@ bool validationReserve(List<DateTime> nou, List<dynamic> selectedEvent) {
   }
   return validate;
 }
+
+addNewUser(String codi, String idgru){
+  Firestore.instance
+    .collection('group')
+    .document(idgru)
+    .collection('assets')
+    .add({'members': codi});
+}

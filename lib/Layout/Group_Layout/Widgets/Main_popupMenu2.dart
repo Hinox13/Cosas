@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Asset_Calendar/Add_User/Add_User.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Info/Group_Info.dart';
@@ -42,7 +40,7 @@ class Main_PopupMenu2 extends StatelessWidget {
           switch (value) {
             case 'Afegir':
               {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddUser()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddUser(group: group)));
               }
               break;
             case 'Eliminar':
