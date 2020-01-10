@@ -49,7 +49,11 @@ class _AddUserState extends State<AddUser> {
   Future _scan(String idgru) async {
     String barcode = await scanner.scan();
     print(barcode);
-  //  Firestore.instance.collection('group').document(idgru).add({'members': barcode});
+  // Firestore.instance.collection('group').document(idgru).add({'members': barcode});
+ // Firestore.instance.collection('users').document(barcode).setData('group':idgroup);
+  Firestore.instance
+            .collection('users')
+            .document(barcode).updateData({'group': FieldValue.arrayUnion([idgru])});
     Navigator.of(context).pop();
   }
 
