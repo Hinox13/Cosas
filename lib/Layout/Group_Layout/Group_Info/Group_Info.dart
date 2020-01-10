@@ -32,9 +32,10 @@ class _Group_InfoState extends State<Group_Info>
 
   @override
   Widget build(BuildContext context) {
-    String id = this.widget.group.id;
+    String idgroup = this.widget.group.id;
     String description = this.widget.group.description;
-    List<dynamic> members = this.widget.group.user_list;
+   List<dynamic> members = this.widget.group.user_list;
+  
     //print(members);
     //llistamembres(idgroup, members, description);
 
@@ -46,9 +47,9 @@ class _Group_InfoState extends State<Group_Info>
           children: <Widget>[
             TitleDescription(),
             SizedBox(height: 15),
-            TextDescription(idgroup: id, groupdescription: description),
+            TextDescription(idgroup: idgroup, groupdescription: description),
             SizedBox(height: 15),
-            ListMembers(members: members),
+            ListMembers(id: idgroup),
           ],
         ),
       ),
@@ -108,11 +109,11 @@ class TextDescription extends StatelessWidget {
 ///   LLista dels membres del grup seleccionat   ////////////////
 
 class ListMembers extends StatelessWidget {
-   List<dynamic> members;
+String id;
 
    ListMembers({
     Key key,
-    @required this.members,
+    @required this.id,
   }) : super(key: key);
 
   @override
@@ -122,7 +123,7 @@ class ListMembers extends StatelessWidget {
       flex: 2,
       child: StreamBuilder(
         stream: Firestore.instance
-            .collection('group').where('group', whereIn: members)
+            .collection('users').where('group',arrayContains: id )
             //.where('users',arrayContainsAny: members)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
