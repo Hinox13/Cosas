@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:core';
-
+import 'package:toast/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -10,11 +10,13 @@ import 'package:projecte_visual/funcions.dart';
 FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,String assetid, String userid, DateTime dayselected,List<dynamic>selectedEvents) {
      DateTime initTime;
       DateTime finishTime;
+    var toast;
 
  List<DateTime> timeOnDaySelected(DateTime init, DateTime finish, DateTime dayselected){ 
   List<DateTime> timefixed = [
    DateTime(dayselected.year,dayselected.month,dayselected.day, init.hour, init.minute, init.second),
    DateTime(dayselected.year,dayselected.month,dayselected.day, finish.hour, finish.minute, finish.second)
+   
   ];
   return timefixed;
  }
@@ -79,6 +81,9 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
                   if(valid==true){
                    Firestore.instance.collection('event').add(e.toFirestore());
                   Navigator.of(context).pop(t);}
+                  if(valid == false){
+                    // AQUI VA EL TOAST DIENT QUE EL FORMAT ESTA MAL
+                  }
                   else{ Navigator.of(context).pop();}
                 },
               ),
@@ -99,5 +104,3 @@ FutureOr inReserve(BuildContext context,List<DateTime>temp,String idgroup ,Strin
       }); 
     }
 
- 
-  
