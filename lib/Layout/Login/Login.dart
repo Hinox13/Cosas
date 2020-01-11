@@ -41,63 +41,122 @@ class _LoginScreenState extends State<LoginScreen> {
     return MaterialApp(
       title: 'RoomShare',
       color: Colors.white,
-      theme: ThemeData(primarySwatch: Colors.orange),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text('Welcome to Comparte.me'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height:75,
-                  width: 75,
-                  child: Image.asset('logo/logo.png')
-                ),
-                TextFormField(
-                  validator: (input) {
-                    if (input.isEmpty) {
-                      return 'Please, type the required email';
-                    } else
-                      return null;
-                  },
-                  onSaved: (input) => _email = input,
-                  decoration: InputDecoration(
-                    labelText: 'E-mail',
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextFormField(
-                  obscureText: true,
-                  validator: (input) {
-                    if (input.length < 6) {
-                      return 'Please The password needs minimum 6 characters';
-                    } else
-                      return null;
-                  },
-                  onSaved: (input) => _password = input,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                ),
-                SizedBox(height: 10),
-                RaisedButton(
-                  onPressed: signIn,
-                  child: Text('Login'),
-                ),
-                SizedBox(height: 5),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SignUpScreen()));
-                  },
-                  child: Text('Register'),
-                ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment
+                  .topCenter,
+              colors: [
+                Color.fromARGB(120, 0, 120, 250),
+                Color.fromARGB(150, 250, 200, 0),
+                Color.fromARGB(250, 250, 150, 0),
+                Color.fromARGB(180, 200, 0, 0),
               ],
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Form(
+              key: formKey,
+              child: Center(
+                child: Container(
+                  height: 400,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black87,
+                            offset: Offset(10, 15),
+                            blurRadius: 30),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                            height: 75,
+                            width: 75,
+                            child: Image.asset('logo/logo.png')),
+                        SizedBox(height: 10),
+                        Text(
+                          'Sign In',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Please, type the required email';
+                            } else
+                              return null;
+                          },
+                          onSaved: (input) => _email = input,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white30,
+                            filled: true,
+                            prefixIcon: Icon(Icons.person),
+                            labelText: 'E-mail',
+                            contentPadding:
+                                EdgeInsets.only(left: 10, bottom: 15),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            labelStyle: TextStyle(),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          obscureText: true,
+                          validator: (input) {
+                            if (input.length < 6) {
+                              return 'Please The password needs minimum 6 characters';
+                            } else
+                              return null;
+                          },
+                          onSaved: (input) => _password = input,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white30,
+                            filled: true,
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: 'Password',
+                            contentPadding:
+                                EdgeInsets.only(left: 10, bottom: 15),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            labelStyle: TextStyle(),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: RaisedButton(
+                                color: Colors.pink[300],
+                                onPressed: signIn,
+                                child: Text('Login',
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
+                          },
+                          child: Text('Register'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

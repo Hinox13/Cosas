@@ -143,13 +143,12 @@ String id;
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                       contentPadding: EdgeInsets.all(20),
                       title: Text('Status of ${users[index].name}'),
                       content: Container(
-                        height: 250,
-                        width: 300,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black87)),
+                            border: Border.all(color: Colors.black87), borderRadius:  BorderRadius.circular(5)),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15.0, vertical: 15),

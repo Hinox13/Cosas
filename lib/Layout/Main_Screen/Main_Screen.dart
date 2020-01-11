@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
       theme: ThemeData(primarySwatch: Colors.orange),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Comparte.me'),
+          title: Text('My Groups'),
           actions: <Widget>[
             //Widget para el desplegable add_group, Delete_group and profile
             Main_PopupMenu(userid: iduser),

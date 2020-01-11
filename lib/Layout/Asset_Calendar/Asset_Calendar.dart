@@ -125,7 +125,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reserve Calendar'),
+        title: Text('Booking Calendar'),
       ),
       body: StreamBuilder(
         stream: Firestore.instance
