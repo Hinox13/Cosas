@@ -107,6 +107,7 @@ You will lose all the events associated with this. """),
                      });
                     return batch.commit();
                   });
+
 //////////////////ELIMINACIÓ DEL ASSET DE LA NOSTRA LLISTA//////////////////////////////
                      assets.removeAt(index);
                 

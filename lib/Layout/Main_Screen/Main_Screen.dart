@@ -66,6 +66,25 @@ class _MainScreenState extends State<MainScreen> {
                       builder: (context) => Group_Layout( iduser: iduser,group: groups[index]),
                     ));
                   },
+                  onLongPress: (){
+
+
+
+
+  ////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////                
+                  Firestore.instance
+                      .collection('group')
+                      .document(groups[index].id)
+                      .delete();         
+
+//////////////////////ELIMINACIÓ DEL DATA GROUP DE L'ARRAY GROUPS DE CADA USUARI  //////////
+///                                       (falta fer)                             //////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.account_circle,
