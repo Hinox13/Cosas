@@ -19,18 +19,16 @@ class _Group_LayoutState extends State<Group_Layout> {
   @override
   Widget build(BuildContext context) {
     String idgroup = this.widget.group.id;
-    String gname= this.widget.group.name;
-     String iduser = this.widget.iduser;
+    String gname = this.widget.group.name;
+    String iduser = this.widget.iduser;
     Group group = this.widget.group;
-   
-   
+
     return Scaffold(
       appBar: AppBar(
         title: Text(gname),
         actions: <Widget>[
           //Widget para el desplegable add_group, Delete_group and profile
-          Main_PopupMenu2(iduser:iduser, group: group ),
-         
+          Main_PopupMenu2(iduser: iduser, group: group),
         ],
       ),
       //Codigo para la visualizacion del calendario acual
@@ -69,14 +67,67 @@ class _Group_LayoutState extends State<Group_Layout> {
                   ));
                 },
                 onLongPress: () {
-                  assets.removeAt(index);
+
+                               
+                showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          title: Text('Delete ASSET'),
+                          content: Text(
+                              """Are you sure you want to DELETE THIS ASSET?
+
+You will lose all the events associated with this. """),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
+
+
+  ////////////////////ELIMINACIÓ ASSETS//////////////////////////                
                   Firestore.instance
                       .collection('group')
                       .document(idgroup)
                       .collection('assets')
                       .document(assets[index].id)
                       .delete();
-                  // Firestore.instance.collection('event').document(event.value['eventid']).delete();
+
+                     
+//////////////////////ELIMINACIÓ DE CADA EVENT QUE CONTÉ L'ASSET ELIMINAT///////////
+                 Firestore.instance
+                      .collection('event')
+                      .where('assetid', isEqualTo: assets[index].id)
+                      .getDocuments()
+                      .then( (docs) {
+                    var batch = Firestore.instance.batch();
+                     docs.documents.forEach((doc){
+                       batch.delete(doc.reference);
+                     });
+                    return batch.commit();
+                  });
+//////////////////ELIMINACIÓ DEL ASSET DE LA NOSTRA LLISTA//////////////////////////////
+                     assets.removeAt(index);
+                
+
+
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      );
+
+
+
                 },
                 child: ListTile(
                   leading: Icon(
@@ -96,3 +147,7 @@ class _Group_LayoutState extends State<Group_Layout> {
     );
   }
 }
+
+
+  
+                      
