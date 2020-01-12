@@ -68,10 +68,23 @@ class _MainScreenState extends State<MainScreen> {
                   },
                   onLongPress: (){
 
+   showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          title: Text('Delete ASSET'),
+                          content: Text(
+                              """Are you sure you want to DELETE THIS ASSET?
 
+You will lose all the assets and events associated with this. """),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
 
-
-  ////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////                
+////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////                
                   Firestore.instance
                       .collection('group')
                       .document(groups[index].id)
@@ -81,13 +94,36 @@ class _MainScreenState extends State<MainScreen> {
 ///                                       (falta fer)                             //////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+                
+
+
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      );
+
+
+
+          
+
+
+  
 
 
 
                   },
                   child: ListTile(
                     leading: Icon(
-                      Icons.account_circle,
+                      Icons.group,
                       size: 40,
                     ),
                     title: Padding(

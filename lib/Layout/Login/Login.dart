@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: <Widget>[
                                 Expanded(
                                   child: RaisedButton(
-                                    color: Colors.pink[300],
+                                    color: Colors.orange,
                                     onPressed: signIn,
                                     child: Text('Login',
                                         style: TextStyle(color: Colors.white)),
@@ -142,12 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                             SizedBox(height: 5),
-                            RaisedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
-                              },
-                              child: Text('Register'),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                                              child: RaisedButton(
+                                                              
+                                    onPressed: () {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => SignUpScreen()));
+                                    },
+                                    child: Text('Register'),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -160,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     right: .0,
                     child: Center(
                       child: CircleAvatar(
-                       backgroundColor: Colors.pink[300],
+                       backgroundColor: Colors.orange,
 
                         radius: 50.0,
                         child: Container(

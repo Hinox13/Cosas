@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         title: Text('Registration'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(25.0),
         child: Form(
           key: formKey,
           child: Column(

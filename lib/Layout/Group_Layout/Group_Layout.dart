@@ -132,7 +132,7 @@ You will lose all the events associated with this. """),
                 },
                 child: ListTile(
                   leading: Icon(
-                    Icons.account_circle,
+                    Icons.bookmark,
                     size: 40,
                   ),
                   title: Padding(
