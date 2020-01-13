@@ -55,71 +55,87 @@ class _MainScreenState extends State<MainScreen> {
             }
             List<DocumentSnapshot> docs = snapshot.data.documents;
             List<Group> groups = docaGrup_list(docs);
-           
+
             return ListView.builder(
               itemCount: groups.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                     //whos=who(groups[index].user_list);
+                    //whos=who(groups[index].user_list);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Group_Layout( iduser: iduser,group: groups[index]),
+                      builder: (context) =>
+                          Group_Layout(iduser: iduser, group: groups[index]),
                     ));
                   },
-                  onLongPress: (){
-
-   showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          contentPadding: EdgeInsets.all(20),
-                          title: Text('Delete ASSET'),
-                          content: Text(
-                              """Are you sure you want to DELETE THIS ASSET?
+                  onLongPress: () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        contentPadding: EdgeInsets.all(20),
+                        title: Text('Delete ASSET'),
+                        content:
+                            Text("""Are you sure you want to DELETE THIS ASSET?
 
 You will lose all the assets and events associated with this. """),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                setState(() {
-
-////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////                
-                  Firestore.instance
-                      .collection('group')
-                      .document(groups[index].id)
-                      .delete();         
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              setState(() {
+////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////
+                                Firestore.instance
+                                    .collection('group')
+                                    .document(groups[index].id)
+                                    .delete();
 
 //////////////////////ELIMINACIÓ DEL DATA GROUP DE L'ARRAY GROUPS DE CADA USUARI  //////////
-///                                       (falta fer)                             //////////
-////////////////////////////////////////////////////////////////////////////////////////////
+                                ///                                       (falta fer)                             //////////
 
-                
-
-
+                                Firestore.instance
+                                    .collection('users')
+                                    .where('group',
+                                        arrayContains: groups[index].id)
+                                    .getDocuments()
+                                    .then((documents) {
+                                  var docs = documents.documents;
+                                  docs.forEach((doc) {
+                                    Map<String, dynamic> group =
+                                        doc.data['group'];
+                                    List<String> grouplist =
+                                        group.values.toList();
+                                      int n= grouplist.length;
+                                    int ind;
+                                    print(grouplist);
+                                    for (int i = 0; i < n; i++) {
+                                      if (grouplist[i] == groups[index].id) {
+                                        ind=i;
+                                      }
+                                    
+                                    }
+                                    grouplist.removeAt(ind);
+Map<int, String> g = grouplist.asMap();
+                                    Firestore.instance
+                                        .collection('users')
+                                        .document('${doc.documentID}')
+                                        .setData({'group':g });
+                                  });
                                 });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            FlatButton(
-                              child: Text('No'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )
-                          ],
-                        ),
-                      );
 
-
-
-          
-
-
-  
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      ),
+                    );
                   },
                   child: ListTile(
                     leading: Icon(

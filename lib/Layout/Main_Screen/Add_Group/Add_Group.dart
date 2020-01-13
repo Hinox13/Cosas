@@ -58,6 +58,11 @@ class _Add_GroupState extends State<Add_Group> {
                           .document('${ref.documentID}')
                           .collection('assets')
                           .add({'name': 'The entire ${newgroup.name}'});
+                          //Afegim el primer usuari que l'ha creat--> l'admin
+                           
+                          Firestore.instance.collection('users').document(userid).updateData({
+      'group': FieldValue.arrayUnion(['${ref.documentID}'])
+    });
                       Navigator.of(context).pop();
                     }),
                 RaisedButton(
