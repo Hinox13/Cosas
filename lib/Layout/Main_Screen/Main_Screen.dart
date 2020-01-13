@@ -83,6 +83,42 @@ You will lose all the assets and events associated with this. """),
                             child: Text('Yes'),
                             onPressed: () {
                               setState(() {
+/////////////ELIMINEM ELS EVENTS REFERITS ALS ASSETS DEL GROUP A ELIMINAR///////////////////////////////////////////////////////////
+
+                               
+                                Firestore.instance
+                                    .collection('group')
+                                    .document(groups[index].id)
+                                    .collection('assets')
+                                    .getDocuments()
+                                    .then((documents) {
+                                  documents.documents.forEach((doc) {
+                                    Firestore.instance
+                                        .collection('event')
+                                        .where('assetid',
+                                            isEqualTo: '${doc.documentID}')
+                                        .getDocuments()
+                                        .then((d) {
+                                      d.documents.forEach((doc) {
+                                      doc.reference.delete();
+                                      });
+                                    });
+                                  });
+                                });
+
+///////////////////ELIMINEM LA COL·LECIÓ D'ASSETS DINS DEL DOCUMENT DE LA COL·LECIÓ GROUPS//////////////////
+/////NOTA: si eliminem només el grup no s'acaba de borrar de firestore ja que la col·leció assets no s'elimina)////
+                                Firestore.instance
+                                    .collection('group')
+                                    .document(groups[index].id)
+                                    .collection('assets')
+                                    .getDocuments()
+                                    .then((docu) {
+                                  docu.documents.forEach((doc) {
+                                    doc.reference.delete();
+                                  });
+                                });
+
 ////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////
                                 Firestore.instance
                                     .collection('group')
@@ -92,33 +128,20 @@ You will lose all the assets and events associated with this. """),
 //////////////////////ELIMINACIÓ DEL DATA GROUP DE L'ARRAY GROUPS DE CADA USUARI  //////////
                                 ///                                       (falta fer)                             //////////
 
-                                Firestore.instance
+                                var ref = Firestore.instance
                                     .collection('users')
                                     .where('group',
                                         arrayContains: groups[index].id)
                                     .getDocuments()
                                     .then((documents) {
-                                  var docs = documents.documents;
-                                  docs.forEach((doc) {
-                                    Map<String, dynamic> group =
-                                        doc.data['group'];
-                                    List<String> grouplist =
-                                        group.values.toList();
-                                      int n= grouplist.length;
-                                    int ind;
-                                    print(grouplist);
-                                    for (int i = 0; i < n; i++) {
-                                      if (grouplist[i] == groups[index].id) {
-                                        ind=i;
-                                      }
-                                    
-                                    }
-                                    grouplist.removeAt(ind);
-Map<int, String> g = grouplist.asMap();
+                                  documents.documents.forEach((doc) {
                                     Firestore.instance
                                         .collection('users')
                                         .document('${doc.documentID}')
-                                        .setData({'group':g });
+                                        .updateData({
+                                      'group': FieldValue.arrayRemove(
+                                          [groups[index].id])
+                                    });
                                   });
                                 });
 

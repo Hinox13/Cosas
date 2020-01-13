@@ -47,7 +47,7 @@ class _Add_GroupState extends State<Add_Group> {
                     child: Text('Add'),
                     onPressed: () async {
                       Group newgroup = Group(_controllerName.text, userid, null,
-                          [userid], _controllerdescription.text);
+                          [userid], _controllerdescription.text,null);
                       //Creem el document i el guardem per tal de tenir ja de firebase tota la info sobre aquest
                       DocumentReference ref = await Firestore.instance
                           .collection('group')
