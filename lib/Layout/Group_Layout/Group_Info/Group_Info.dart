@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
@@ -8,7 +9,7 @@ import 'package:projecte_visual/funcions.dart';
 
 class Group_Info extends StatefulWidget {
   final String iduser;
-   Group group;
+  Group group;
   Group_Info({this.iduser, this.group});
   @override
   _Group_InfoState createState() => _Group_InfoState();
@@ -33,9 +34,11 @@ class _Group_InfoState extends State<Group_Info>
   @override
   Widget build(BuildContext context) {
     String idgroup = this.widget.group.id;
+    String iduser = this.widget.iduser;
     String description = this.widget.group.description;
-   List<dynamic> members = this.widget.group.user_list;
-  
+    List<dynamic> members = this.widget.group.user_list;
+    String admin = this.widget.group.admin;
+
     //print(members);
     //llistamembres(idgroup, members, description);
 
@@ -49,7 +52,7 @@ class _Group_InfoState extends State<Group_Info>
             SizedBox(height: 15),
             TextDescription(idgroup: idgroup, groupdescription: description),
             SizedBox(height: 15),
-            ListMembers(id: idgroup),
+            ListMembers(id: idgroup, iduser: iduser, admin: admin),
           ],
         ),
       ),
@@ -109,11 +112,13 @@ class TextDescription extends StatelessWidget {
 ///   LLista dels membres del grup seleccionat   ////////////////
 
 class ListMembers extends StatelessWidget {
-String id;
+  String id, iduser, admin;
 
-   ListMembers({
+  ListMembers({
     Key key,
     @required this.id,
+    @required this.iduser,
+    @required this.admin,
   }) : super(key: key);
 
   @override
@@ -123,7 +128,8 @@ String id;
       flex: 2,
       child: StreamBuilder(
         stream: Firestore.instance
-            .collection('users').where('group',arrayContains: id )
+            .collection('users')
+            .where('group', arrayContains: id)
             //.where('users',arrayContainsAny: members)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -133,22 +139,23 @@ String id;
           List<DocumentSnapshot> docs = snapshot.data.documents;
           print(docs[0]);
           List<User> users = docaUser_list(docs);
-         
+
           return ListView.builder(
-            itemCount:users.length,
+            itemCount: users.length,
             itemBuilder: (context, index) {
-              
               return InkWell(
                 onTap: () {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
                       contentPadding: EdgeInsets.all(20),
                       title: Text('Status of ${users[index].name}'),
                       content: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black87), borderRadius:  BorderRadius.circular(5)),
+                            border: Border.all(color: Colors.black87),
+                            borderRadius: BorderRadius.circular(5)),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15.0, vertical: 15),
@@ -157,6 +164,33 @@ String id;
                       ),
                     ),
                   );
+                },
+                onLongPress: () {
+                  if (iduser == admin) {
+                    Firestore.instance
+                        .collection('users')
+                        .document(users[index].id)
+                        .updateData({
+                      "group": FieldValue.arrayRemove([id])
+                    });
+
+                    Firestore.instance
+                        .collection('group')
+                        .document(id)
+                        .updateData({
+                      "members": FieldValue.arrayRemove([users[index].id])
+                    });
+                  } else {
+                     Fluttertoast.showToast(
+                  msg: "Unauthorized action! You are not the admin of this group",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 3,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 12.0);
+                    print('no admin');
+                  }
                 },
                 child: ListTile(
                   leading: Icon(

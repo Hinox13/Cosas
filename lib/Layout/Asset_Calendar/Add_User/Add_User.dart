@@ -45,7 +45,7 @@ class _AddUserState extends State<AddUser> {
                 child: Text("CamScanner")),
             RaisedButton(
                 onPressed: _scanPhoto,
-                child: Text("Escanejar QR des de la galeria")),
+                child: Text("Scann QR from the gallery")),
           ],
         ),
       ),
