@@ -17,8 +17,6 @@ FutureOr inReserve(
     List<dynamic> selectedEvents) {
   DateTime initTime;
   DateTime finishTime;
-  var toast;
-
   List<DateTime> timeOnDaySelected(
       DateTime init, DateTime finish, DateTime dayselected) {
     List<DateTime> timefixed = [
@@ -34,23 +32,45 @@ FutureOr inReserve(
     barrierDismissible: false,
     context: context,
     builder: (context) => AlertDialog(
-      titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      title: Text('Reserve'),
+     titlePadding: EdgeInsets.all(0),
+      title: Row(
+        children: <Widget>[
+          Expanded(child: Container(color:Colors.orange,child: Padding(
+            padding: const EdgeInsets.only(top:30, bottom:20, left:20),
+            child: Column(
+           
+            crossAxisAlignment: CrossAxisAlignment.start ,
+              children: <Widget>[
+                
+                Text('${dayselected.year}',style: TextStyle(color:Colors.white54),),
+                SizedBox(height:10),
+                Text('${m(dayselected)}, ${dayselected.day}',style: TextStyle(color:Colors.white,fontSize: 30),),
+              ],
+            ),
+          ))),
+        ],
+      ),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Start Time', style: TextStyle(color: Colors.grey)),
+          Text('Start Time (hh:mm)', style: TextStyle(color: Colors.grey)),
+           SizedBox(height:15),
           TimePickerSpinner(
             //TimePickerSpinner per introduir l'hora d'inici
             normalTextStyle: TextStyle(
               fontSize: 12,
+             
+            
             ),
             highlightedTextStyle: TextStyle(
               fontSize: 20,
+              
             ),
             itemHeight: 30,
             is24HourMode: true,
-            isShowSeconds: true,
+            isShowSeconds: false,
+
             onTimeChange: (time) {
               initTime = time;
               print(
@@ -58,7 +78,8 @@ FutureOr inReserve(
             },
           ),
           SizedBox(height: 30),
-          Text('Finish Time', style: TextStyle(color: Colors.grey)),
+          Text('Finish Time (hh:mm)', style: TextStyle(color: Colors.grey)),
+           SizedBox(height:15),
           TimePickerSpinner(
             //TimePickerSpinner per introduir l'hora final
             normalTextStyle: TextStyle(
@@ -69,7 +90,7 @@ FutureOr inReserve(
             ),
             itemHeight: 30,
             is24HourMode: true,
-            isShowSeconds: true,
+            isShowSeconds: false,
             onTimeChange: (time2) {
               finishTime = time2;
               print(
@@ -90,6 +111,7 @@ FutureOr inReserve(
 
             if (valid == true) {
               Firestore.instance.collection('event').add(e.toFirestore());
+            
               Navigator.of(context).pop(t);
             }
             // if(valid == false){
@@ -118,7 +140,49 @@ FutureOr inReserve(
     ),
   ).then((time) {
     if (time != null) print(temp);
-
+    
     temp = time;
   });
+}
+
+String m(DateTime tm){
+ switch (tm.month) {
+        case 1:
+         
+          return  "January";
+          break;
+        case 2:
+          return "February";
+          break;
+        case 3:
+          return "March";
+          break;
+        case 4:
+          return "April";
+          break;
+        case 5:
+          return "May";
+          break;
+        case 6:
+          return "June";
+          break;
+        case 7:
+          return "July";
+          break;
+        case 8:
+          return "August";
+          break;
+        case 9:
+          return "September";
+          break;
+        case 10:
+          return "October";
+          break;
+        case 11:
+          return "November";
+          break;
+        case 12:
+          return "December";
+          break;
+      }
 }

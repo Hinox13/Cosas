@@ -22,8 +22,10 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
   List<dynamic> _selectedEvents;
   List<DateTime> time;
   String name;
+  DateTime select;
   void initState() {
     final _selectedDay = today();
+    select=DateTime.now();
     _selectedEvents = _events[today()] ?? [];
     _calendarController = CalendarController();
 
@@ -36,7 +38,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
     super.dispose();
   }
 
-  DateTime select;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +184,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
             print(select.toString());
             setState(() {
               inReserve(context, time, idgroup, idasset, iduser, select, _selectedEvents);
+            
             });
           }),
     );

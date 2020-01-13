@@ -25,7 +25,7 @@ class _Add_GroupState extends State<Add_Group> {
     return Scaffold(
       appBar: AppBar(title: Text('Add Group')),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             TextField(
