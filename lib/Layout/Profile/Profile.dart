@@ -194,15 +194,6 @@ class _Profile_ScreenState extends State<Profile_Screen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          getnumber(userid);
-        },
-      ),
     );
   }
 }

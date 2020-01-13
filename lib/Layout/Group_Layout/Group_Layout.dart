@@ -54,94 +54,102 @@ class _Group_LayoutState extends State<Group_Layout> {
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
           List<Asset> assets = getAssets(docs);
-          return ListView.builder(
-            itemCount: assets.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Asset_Calendar(
-                        idgroup: idgroup,
-                        idasset: assets[index].id,
-                        iduser: iduser),
-                  ));
-                },
-                onLongPress: () {
+          return Scrollbar(
+                      child: ListView.separated(
+              separatorBuilder: (context,index) =>Divider(
+                height: 1,
+                thickness: 1,
+                endIndent: 20,
+                 indent: 70,
+              ),
+              itemCount: assets.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Asset_Calendar(
+                          idgroup: idgroup,
+                          idasset: assets[index].id,
+                          iduser: iduser),
+                    ));
+                  },
+                  onLongPress: () {
 
-                               
-                showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          contentPadding: EdgeInsets.all(20),
-                          title: Text('Delete ASSET'),
-                          content: Text(
-                              """Are you sure you want to DELETE THIS ASSET?
+                                 
+                  showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            contentPadding: EdgeInsets.all(20),
+                            title: Text('Delete ASSET'),
+                            content: Text(
+                                """Are you sure you want to DELETE THIS ASSET?
 
 You will lose all the events associated with this. """),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                setState(() {
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Yes'),
+                                onPressed: () {
+                                  setState(() {
 
 
   ////////////////////ELIMINACIÓ ASSETS//////////////////////////                
-                  Firestore.instance
-                      .collection('group')
-                      .document(idgroup)
-                      .collection('assets')
-                      .document(assets[index].id)
-                      .delete();
+                    Firestore.instance
+                        .collection('group')
+                        .document(idgroup)
+                        .collection('assets')
+                        .document(assets[index].id)
+                        .delete();
 
-                     
+                       
 //////////////////////ELIMINACIÓ DE CADA EVENT QUE CONTÉ L'ASSET ELIMINAT///////////
-                 Firestore.instance
-                      .collection('event')
-                      .where('assetid', isEqualTo: assets[index].id)
-                      .getDocuments()
-                      .then( (docs) {
-                    var batch = Firestore.instance.batch();
-                     docs.documents.forEach((doc){
-                       batch.delete(doc.reference);
-                     });
-                    return batch.commit();
-                  });
+                   Firestore.instance
+                        .collection('event')
+                        .where('assetid', isEqualTo: assets[index].id)
+                        .getDocuments()
+                        .then( (docs) {
+                      var batch = Firestore.instance.batch();
+                       docs.documents.forEach((doc){
+                         batch.delete(doc.reference);
+                       });
+                      return batch.commit();
+                    });
 
 //////////////////ELIMINACIÓ DEL ASSET DE LA NOSTRA LLISTA//////////////////////////////
-                     assets.removeAt(index);
-                
+                       assets.removeAt(index);
+                  
 
 
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            FlatButton(
-                              child: Text('No'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )
-                          ],
-                        ),
-                      );
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              FlatButton(
+                                child: Text('No'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          ),
+                        );
 
 
 
-                },
-                child: ListTile(
-                  leading: Icon(
-                    Icons.bookmark,
-                    size: 40,
+                  },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.bookmark,
+                      size: 40,
+                    ),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text(assets[index].name),
+                    ),
                   ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(assets[index].name),
-                  ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         },
       ),

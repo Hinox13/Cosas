@@ -56,122 +56,130 @@ class _MainScreenState extends State<MainScreen> {
             List<DocumentSnapshot> docs = snapshot.data.documents;
             List<Group> groups = docaGrup_list(docs);
 
-            return ListView.builder(
-              itemCount: groups.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    //whos=who(groups[index].user_list);
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          Group_Layout(iduser: iduser, group: groups[index]),
-                    ));
-                  },
-                  onLongPress: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        contentPadding: EdgeInsets.all(20),
-                        title: Text('Delete ASSET'),
-                        content:
-                            Text("""Are you sure you want to DELETE THIS ASSET?
+            return Scrollbar(
+                          child: ListView.separated(
+                              separatorBuilder: (context,index) =>Divider(
+                height: 1,
+                thickness: 1,
+                endIndent: 20,
+                 indent: 70,
+              ),
+                itemCount: groups.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      //whos=who(groups[index].user_list);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            Group_Layout(iduser: iduser, group: groups[index]),
+                      ));
+                    },
+                    onLongPress: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          title: Text('Delete ASSET'),
+                          content:
+                              Text("""Are you sure you want to DELETE THIS GROUP?
 
 You will lose all the assets and events associated with this. """),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Yes'),
-                            onPressed: () {
-                              setState(() {
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                setState(() {
 /////////////ELIMINEM ELS EVENTS REFERITS ALS ASSETS DEL GROUP A ELIMINAR///////////////////////////////////////////////////////////
 
-                               
-                                Firestore.instance
-                                    .collection('group')
-                                    .document(groups[index].id)
-                                    .collection('assets')
-                                    .getDocuments()
-                                    .then((documents) {
-                                  documents.documents.forEach((doc) {
-                                    Firestore.instance
-                                        .collection('event')
-                                        .where('assetid',
-                                            isEqualTo: '${doc.documentID}')
-                                        .getDocuments()
-                                        .then((d) {
-                                      d.documents.forEach((doc) {
-                                      doc.reference.delete();
+                                 
+                                  Firestore.instance
+                                      .collection('group')
+                                      .document(groups[index].id)
+                                      .collection('assets')
+                                      .getDocuments()
+                                      .then((documents) {
+                                    documents.documents.forEach((doc) {
+                                      Firestore.instance
+                                          .collection('event')
+                                          .where('assetid',
+                                              isEqualTo: '${doc.documentID}')
+                                          .getDocuments()
+                                          .then((d) {
+                                        d.documents.forEach((doc) {
+                                        doc.reference.delete();
+                                        });
                                       });
                                     });
                                   });
-                                });
 
 ///////////////////ELIMINEM LA COL·LECIÓ D'ASSETS DINS DEL DOCUMENT DE LA COL·LECIÓ GROUPS//////////////////
 /////NOTA: si eliminem només el grup no s'acaba de borrar de firestore ja que la col·leció assets no s'elimina)////
-                                Firestore.instance
-                                    .collection('group')
-                                    .document(groups[index].id)
-                                    .collection('assets')
-                                    .getDocuments()
-                                    .then((docu) {
-                                  docu.documents.forEach((doc) {
-                                    doc.reference.delete();
-                                  });
-                                });
-
-////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////
-                                Firestore.instance
-                                    .collection('group')
-                                    .document(groups[index].id)
-                                    .delete();
-
-//////////////////////ELIMINACIÓ DEL DATA GROUP DE L'ARRAY GROUPS DE CADA USUARI  //////////
-                                ///                                       (falta fer)                             //////////
-
-                                var ref = Firestore.instance
-                                    .collection('users')
-                                    .where('group',
-                                        arrayContains: groups[index].id)
-                                    .getDocuments()
-                                    .then((documents) {
-                                  documents.documents.forEach((doc) {
-                                    Firestore.instance
-                                        .collection('users')
-                                        .document('${doc.documentID}')
-                                        .updateData({
-                                      'group': FieldValue.arrayRemove(
-                                          [groups[index].id])
+                                  Firestore.instance
+                                      .collection('group')
+                                      .document(groups[index].id)
+                                      .collection('assets')
+                                      .getDocuments()
+                                      .then((docu) {
+                                    docu.documents.forEach((doc) {
+                                      doc.reference.delete();
                                     });
                                   });
-                                });
+
+////////////////////ELIMINACIÓ DEL DOCUMENT GROUP DE LA COL·LECCIÓ GOUP//////////////////////////
+                                  Firestore.instance
+                                      .collection('group')
+                                      .document(groups[index].id)
+                                      .delete();
+
+//////////////////////ELIMINACIÓ DEL DATA GROUP DE L'ARRAY GROUPS DE CADA USUARI  //////////
+ 
+
+                                  var ref = Firestore.instance
+                                      .collection('users')
+                                      .where('group',
+                                          arrayContains: groups[index].id)
+                                      .getDocuments()
+                                      .then((documents) {
+                                    documents.documents.forEach((doc) {
+                                      Firestore.instance
+                                          .collection('users')
+                                          .document('${doc.documentID}')
+                                          .updateData({
+                                        'group': FieldValue.arrayRemove(
+                                            [groups[index].id])
+                                      });
+                                    });
+                                  });
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-                              });
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('No'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('No'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.group,
+                        size: 40,
                       ),
-                    );
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.group,
-                      size: 40,
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(groups[index].name),
+                      ),
                     ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(groups[index].name),
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         ),

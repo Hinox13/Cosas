@@ -42,9 +42,9 @@ class Event {
 class Group {
   String name, admin, id, description;
   List user_list;
-  List<String> asset_list;
+  
 
-  Group(this.name, this.admin, this.id, this.user_list, this.description, this.asset_list);
+  Group(this.name, this.admin, this.id, this.user_list, this.description);
 
   Map<String, dynamic> toFirestore() {
     return {
