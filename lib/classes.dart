@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projecte_visual/funcions.dart';
 
 class User {
   String id, name, status;
