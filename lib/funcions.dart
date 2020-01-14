@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projecte_visual/classes.dart';
 import 'dart:core';
-import 'package:flutter/material.dart';
 
 ///////CONVERSIO DEL FIREBASE A LLISTA D'EVENTS/////////////////////////////////
 List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
