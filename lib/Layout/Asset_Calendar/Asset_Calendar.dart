@@ -72,15 +72,14 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text('Reservation'),
-                    leading: Text(name),
+                    title: Text(name),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                            'From: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                            'From: ${e['init'].hour}:${e['init'].minute}'),
                         Text(
-                            'To: ${e['end'].hour}:${e['end'].minute}:${e['end'].second}'),
+                            'To: ${e['end'].hour}:${e['end'].minute}'),
                         SizedBox(width: 20),
                       ],
                     ),

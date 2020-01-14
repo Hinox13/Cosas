@@ -117,6 +117,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
             docu.documentID,
             docu.data['name'],
             docu.data['status'],
+            docu.data['group']
           );
 
           return Center(

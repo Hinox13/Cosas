@@ -3,8 +3,9 @@ import 'package:projecte_visual/funcions.dart';
 
 class User {
   String id, name, status;
+  List<dynamic> group;
 
-  User(this.id, this.name, this.status);
+  User(this.id, this.name, this.status,this.group);
 }
 
 ///////////////////////////////CLASSE D'ASSETS/////////////////////////////////

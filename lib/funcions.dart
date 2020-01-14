@@ -49,7 +49,7 @@ List<User> docaUser_list(List<DocumentSnapshot> doc) {
   for (var docu in doc) {
 
     user_list
-        .add(User(docu.documentID, docu.data['name'], docu.data['status']));
+        .add(User(docu.documentID, docu.data['name'], docu.data['status'],docu.data['group']));
   }
   return user_list;
 }

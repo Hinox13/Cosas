@@ -18,6 +18,7 @@ class _User_CalendarState extends State<User_Calendar> {
   List _selectedEvents;
   List<DateTime> time;
   String name;
+  String gname;
   void initState() {
     final _selectedDay = today();
     _selectedEvents = _events[today()] ?? [];
@@ -42,6 +43,7 @@ class _User_CalendarState extends State<User_Calendar> {
         itemCount: _selectedEvents.length,
         itemBuilder: (context, index) {
           dynamic e = _selectedEvents[index];
+          List<dynamic> grups;
           //document(e['userid'])
           return StreamBuilder(
               stream: Firestore.instance.collection('users').snapshots(),
@@ -53,7 +55,9 @@ class _User_CalendarState extends State<User_Calendar> {
                     snapshoti.data.documents; //No ha petao
                 List<User> users = docaUser_list(docos);
                 for (var user in users) {
-                  if (user.id == e['userid']) name = user.name;
+                  if (user.id == e['userid']){
+                    name = user.name;
+                    grups = user.group;}
                 }
                 return Container(
                   height: 70,
@@ -65,14 +69,13 @@ class _User_CalendarState extends State<User_Calendar> {
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
                     title: Text('Reservation'),
-                    leading: Text(name),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                            'From: ${e['init'].hour}:${e['init'].minute}:${e['init'].second}'),
+                            'From: ${e['init'].hour}:${e['init'].minute}'),
                         Text(
-                            'To: ${e['end'].hour}:${e['init'].minute}:${e['init'].second}'),
+                            'To: ${e['end'].hour}:${e['init'].minute}'),
                         SizedBox(width: 20),
                       ],
                     ),
