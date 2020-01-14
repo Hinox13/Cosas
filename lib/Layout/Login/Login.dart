@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projecte_visual/Layout/Login/Register.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Main_Screen.dart';
 
@@ -29,10 +29,17 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => MainScreen(user: user)));
       } catch (e) {
-        print(e.toString());
+        Fluttertoast.showToast(
+          msg: "Error message! Your E-mail or password are incorrect!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 12.0);
       }
     } else {
-      print('no valido ${_email}, ${_password}');
+      print('no valido $_email, $_password');
     }
   }
 
