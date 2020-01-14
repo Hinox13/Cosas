@@ -18,7 +18,6 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
   CalendarController _calendarController;
   Map<DateTime, List> _events = {};
   List<dynamic> _selectedEvents;
-  List<DateTime> time;
   String name;
   DateTime select;
   void initState() {
@@ -180,7 +179,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
           onPressed: () {
             print(select.toString());
             setState(() {
-              inReserve(context, time, idgroup, idasset, iduser, select, _selectedEvents);
+              inReserve(context,idgroup, idasset, iduser, select, _selectedEvents);
             
             });
           }),

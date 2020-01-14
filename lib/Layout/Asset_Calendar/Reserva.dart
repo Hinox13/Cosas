@@ -9,7 +9,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 FutureOr inReserve(
     BuildContext context,
-    List<DateTime> temp,
     String idgroup,
     String assetid,
     String userid,
@@ -135,11 +134,7 @@ FutureOr inReserve(
         ),
       ],
     ),
-  ).then((time) {
-    if (time != null) print(temp);
-    
-    temp = time;
-  });
+  );
 }
 
 String m(DateTime tm){
