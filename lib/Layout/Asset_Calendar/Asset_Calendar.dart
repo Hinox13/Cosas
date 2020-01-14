@@ -138,7 +138,7 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
             return Center(child: CircularProgressIndicator());
           }
 
-          List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
+          List<DocumentSnapshot> docs = snapshot.data.documents;
           List<Event> events = docaEvent_list(docs);
           _events.clear();
 
