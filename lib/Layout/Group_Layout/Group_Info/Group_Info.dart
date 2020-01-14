@@ -39,9 +39,6 @@ class _Group_InfoState extends State<Group_Info>
     List<dynamic> members = this.widget.group.user_list;
     String admin = this.widget.group.admin;
 
-    //print(members);
-    //llistamembres(idgroup, members, description);
-
     return Scaffold(
       appBar: AppBar(title: Text('Group Info')),
       body: Padding(
@@ -123,21 +120,18 @@ class ListMembers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //members.add('OQQkPrCOGWUau2APBMrSpDWTGTp1');
     return Expanded(
       flex: 2,
       child: StreamBuilder(
         stream: Firestore.instance
             .collection('users')
             .where('group', arrayContains: id)
-            //.where('users',arrayContainsAny: members)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           List<DocumentSnapshot> docs = snapshot.data.documents;
-          print(docs[0]);
           List<User> users = docaUser_list(docs);
 
           return ListView.builder(
@@ -189,7 +183,6 @@ class ListMembers extends StatelessWidget {
                   backgroundColor: Colors.red,
                   textColor: Colors.white,
                   fontSize: 12.0);
-                    print('no admin');
                   }
                 },
                 child: ListTile(
