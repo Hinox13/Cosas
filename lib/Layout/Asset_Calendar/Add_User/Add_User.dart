@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/classes.dart';
-import 'package:projecte_visual/funcions.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class AddUser extends StatefulWidget {
@@ -56,9 +55,6 @@ class _AddUserState extends State<AddUser> {
 
   Future _scan(String idgru) async {
     String barcode = await scanner.scan();
-    print(barcode);
-    // Firestore.instance.collection('group').document(idgru).add({'members': barcode});
-    // Firestore.instance.collection('users').document(barcode).setData('group':idgroup);
     Firestore.instance.collection('users').document(barcode).updateData({
       'group': FieldValue.arrayUnion([idgru])
     });
