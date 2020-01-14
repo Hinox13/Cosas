@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:projecte_visual/Layout/Group_Layout/Group_Layout.dart';
 import 'package:projecte_visual/Layout/Main_Screen/User_Calendar/User_Calendar.dart';
 import 'package:projecte_visual/Layout/Main_Screen/Widgets/Main_popupMenu.dart';
-import 'package:projecte_visual/Layout/Asset_Calendar/Asset_Calendar.dart';
 import 'package:projecte_visual/classes.dart';
 import 'package:projecte_visual/funcions.dart';
 
@@ -19,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     String iduser = this.widget.user.uid;
-    //Map<String,String> whos;
     return MaterialApp(
       title: 'RoomShare',
       color: Colors.white,
@@ -68,7 +66,6 @@ class _MainScreenState extends State<MainScreen> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      //whos=who(groups[index].user_list);
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             Group_Layout(iduser: iduser, group: groups[index]),

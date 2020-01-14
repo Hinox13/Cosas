@@ -44,7 +44,7 @@ class _User_CalendarState extends State<User_Calendar> {
         itemBuilder: (context, index) {
           dynamic e = _selectedEvents[index];
           List<dynamic> grups;
-          //document(e['userid'])
+          
           return StreamBuilder(
               stream: Firestore.instance.collection('users').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshoti) {
@@ -52,16 +52,14 @@ class _User_CalendarState extends State<User_Calendar> {
                   return Center(child: CircularProgressIndicator());
                 }
                 List<DocumentSnapshot> docos =
-                    snapshoti.data.documents; //No ha petao
+                    snapshoti.data.documents;
                 List<User> users = docaUser_list(docos);
                 for (var user in users) {
                   if (user.id == e['userid']){
                     name = user.name;
                     grups = user.group;}
                 }
-                //aqui m'he quedat
-                Firestore.instance.collection('asset').where('documentID', isEqualTo: e['assetid']).getDocuments();
-
+                
                 return Container(
                   height: 70,
                   decoration: BoxDecoration(
@@ -82,7 +80,6 @@ class _User_CalendarState extends State<User_Calendar> {
                         SizedBox(width: 20),
                       ],
                     ),
-                    onTap: () => print(e),
                     onLongPress: () {
                       showDialog(
                         barrierDismissible: false,
@@ -138,7 +135,7 @@ class _User_CalendarState extends State<User_Calendar> {
             return Center(child: CircularProgressIndicator());
           }
 
-          List<DocumentSnapshot> docs = snapshot.data.documents; //No ha petao
+          List<DocumentSnapshot> docs = snapshot.data.documents;
           List<Event> events = docaEvent_list(docs);
           _events.clear();
           for (var eve in events) {
