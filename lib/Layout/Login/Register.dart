@@ -91,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print(e.toString());
       }
     } else {
-      print('no valido ${_email}, ${_password}');
+      print('no valido $_email, $_password');
     }
   }
 }
