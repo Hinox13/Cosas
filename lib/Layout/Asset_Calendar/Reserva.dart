@@ -105,7 +105,6 @@ FutureOr inReserve(
           onPressed: () {
             List<DateTime> t =
                 timeOnDaySelected(initTime, finishTime, dayselected);
-            //List<DateTime> t = [initTime, finishTime];
             Event e = Event(userid, assetid, t[0], t[1]);
             bool valid = validationReserve(t, selectedEvents);
 
@@ -114,9 +113,7 @@ FutureOr inReserve(
             
               Navigator.of(context).pop(t);
             }
-            // if(valid == false){
-            //   Navigator.of(context).pop(t);
-            // }
+            
             else {
               Fluttertoast.showToast(
                   msg: "Error message! Your booking is not available",
