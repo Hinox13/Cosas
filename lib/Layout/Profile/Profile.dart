@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projecte_visual/classes.dart';
-import 'package:projecte_visual/funcions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Profile_Screen extends StatefulWidget {
@@ -198,7 +196,3 @@ class _Profile_ScreenState extends State<Profile_Screen> {
     );
   }
 }
-
-/*
-
-*/
