@@ -44,7 +44,9 @@ class _AddUserState extends State<AddUser> {
                 },
                 child: Text("CamScanner")),
             RaisedButton(
-                onPressed: _scanPhoto,
+                onPressed: () {
+                  _scanPhoto(idgru);
+                },
                 child: Text("Scann QR from the gallery")),
           ],
         ),
@@ -67,8 +69,15 @@ class _AddUserState extends State<AddUser> {
     Navigator.of(context).pop();
   }
 
-  Future _scanPhoto() async {
+  Future _scanPhoto(String idgru) async {
     String barcode = await scanner.scanPhoto();
-    setState(() => this.barcode = barcode);
+    Firestore.instance.collection('users').document(barcode).updateData({
+      'group': FieldValue.arrayUnion([idgru])
+    });
+    Firestore.instance.collection('group').document(idgru).updateData({
+      'members': FieldValue.arrayUnion([barcode])
+    });
+
+    Navigator.of(context).pop();
   }
 }
