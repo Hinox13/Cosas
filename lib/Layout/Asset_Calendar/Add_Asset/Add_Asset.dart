@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projecte_visual/Layout/Profile/Profile.dart';
-import 'package:projecte_visual/classes.dart';
 
 class Add_Asset extends StatefulWidget {
   String idgroup;
@@ -22,7 +20,7 @@ class _Add_AssetState extends State<Add_Asset> {
   Widget build(BuildContext context) {
     String idgroup = this.widget.idgroup;
     return Scaffold(
-      appBar: AppBar(title: Text('Add Group')),
+      appBar: AppBar(title: Text('Add Asset')),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
