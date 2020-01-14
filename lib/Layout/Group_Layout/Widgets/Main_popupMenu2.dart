@@ -27,10 +27,6 @@ class Main_PopupMenu2 extends StatelessWidget {
                 child: Text("Add User"),
               ),
               PopupMenuItem(
-                value: 'Eliminar',
-                child: Text("Delete Asset"),
-              ),
-              PopupMenuItem(
                 value: 'Info',
                 child: Text("Group Info"),
               ),
