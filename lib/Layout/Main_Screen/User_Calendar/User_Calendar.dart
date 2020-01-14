@@ -59,6 +59,9 @@ class _User_CalendarState extends State<User_Calendar> {
                     name = user.name;
                     grups = user.group;}
                 }
+                //aqui m'he quedat
+                Firestore.instance.collection('asset').where('documentID', isEqualTo: e['assetid']).getDocuments();
+
                 return Container(
                   height: 70,
                   decoration: BoxDecoration(
