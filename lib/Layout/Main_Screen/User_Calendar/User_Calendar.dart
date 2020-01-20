@@ -43,7 +43,6 @@ class _User_CalendarState extends State<User_Calendar> {
         itemCount: _selectedEvents.length,
         itemBuilder: (context, index) {
           dynamic e = _selectedEvents[index];
-          List<dynamic> grups;
 
           return StreamBuilder(
               stream: Firestore.instance
@@ -58,7 +57,6 @@ class _User_CalendarState extends State<User_Calendar> {
                 }
                 DocumentSnapshot docos = snapshoti.data;
                 String nameasset = docos.data['name'];
-                //docos.data['name'];
 
                 return Container(
                   height: 70,
@@ -82,7 +80,13 @@ class _User_CalendarState extends State<User_Calendar> {
                         DocumentSnapshot docos = snapshoti.data;
                         String groupasset = docos.data['name'];
 
-                        return Text('$nameasset from $groupasset.');
+                        return Row(children: <Widget>[
+                          Text("$nameasset",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(" from ",
+                              style: TextStyle(fontWeight: FontWeight.w300)),
+                          Text("$groupasset.")
+                        ]);
                       },
                     ),
                     subtitle: Row(
@@ -140,7 +144,7 @@ class _User_CalendarState extends State<User_Calendar> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking Calendar'),
+        title: Text('My Calendar'),
       ),
       body: StreamBuilder(
         stream: Firestore.instance
