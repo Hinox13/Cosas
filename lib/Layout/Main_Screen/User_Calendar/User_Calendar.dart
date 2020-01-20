@@ -69,7 +69,22 @@ class _User_CalendarState extends State<User_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text('$nameasset'),
+                    title: StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('group')
+                          .document('${e['groupid']}')
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<DocumentSnapshot> snapshoti) {
+                        if (!snapshoti.hasData) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        DocumentSnapshot docos = snapshoti.data;
+                        String groupasset = docos.data['name'];
+
+                        return Text('$nameasset from $groupasset.');
+                      },
+                    ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
