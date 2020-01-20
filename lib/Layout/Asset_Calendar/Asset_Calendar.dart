@@ -147,7 +147,8 @@ class _Asset_CalendarState extends State<Asset_Calendar> {
                   'userid': eve.userid,
                   'eventid': eve.eventid,
                   'init': eve.init,
-                  'end': eve.end
+                  'end': eve.end,
+                  'groupid' : eve.groupid,
                 },
                 _events);
           }

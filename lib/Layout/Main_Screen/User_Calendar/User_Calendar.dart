@@ -44,22 +44,22 @@ class _User_CalendarState extends State<User_Calendar> {
         itemBuilder: (context, index) {
           dynamic e = _selectedEvents[index];
           List<dynamic> grups;
-          
+
           return StreamBuilder(
-              stream: Firestore.instance.collection('users').snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshoti) {
+              stream: Firestore.instance
+                  .collection('group')
+                  .document('${e['groupid']}')
+                  .collection('assets')
+                  .document('${e['assetid']}')
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshoti) {
                 if (!snapshoti.hasData) {
                   return Center(child: CircularProgressIndicator());
                 }
-                List<DocumentSnapshot> docos =
-                    snapshoti.data.documents;
-                List<User> users = docaUser_list(docos);
-                for (var user in users) {
-                  if (user.id == e['userid']){
-                    name = user.name;
-                    grups = user.group;}
-                }
-                
+                DocumentSnapshot docos = snapshoti.data;
+                String nameasset = docos.data['name'];
+                //docos.data['name'];
+
                 return Container(
                   height: 70,
                   decoration: BoxDecoration(
@@ -69,17 +69,19 @@ class _User_CalendarState extends State<User_Calendar> {
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: ListTile(
-                    title: Text('Reservation'),
+                    title: Text('$nameasset'),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                            'From: ${e['init'].hour}:${e['init'].minute}'),
-                        Text(
-                            'To: ${e['end'].hour}:${e['init'].minute}'),
+                        Text('From: ${e['init'].hour}:${e['init'].minute}'),
+                        Text('To: ${e['end'].hour}:${e['init'].minute}'),
                         SizedBox(width: 20),
                       ],
                     ),
+                    onTap: () {
+                      print('${e['assetid']}');
+                      print('${e['groupid']}');
+                    },
                     onLongPress: () {
                       showDialog(
                         barrierDismissible: false,
@@ -143,9 +145,10 @@ class _User_CalendarState extends State<User_Calendar> {
                 yearmonthday(eve.init),
                 {
                   'userid': eve.userid,
-                  'eventid': eve.eventid,
+                  'assetid': eve.assetid,
                   'init': eve.init,
-                  'end': eve.end
+                  'end': eve.end,
+                  'groupid': eve.groupid
                 },
                 _events);
           }

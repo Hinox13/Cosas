@@ -18,9 +18,9 @@ class Asset {
 ///
 ///////////////////////////////CLASSE D'EVENTS/////////////////////////////////
 class Event {
-  String userid, assetid, eventid;
+  String userid, assetid, eventid, groupid;
   DateTime init, end;
-  Event(this.userid, this.assetid, this.init, this.end, {this.eventid});
+  Event(this.userid, this.assetid, this.init, this.end, this.groupid, {this.eventid});
   Event.fromFirestore(Map<String, dynamic> doc, String index)
       : userid = doc['userid'],
         assetid = doc['assetid'],
@@ -33,6 +33,7 @@ class Event {
       'end': Timestamp.fromDate(end),
       'init': Timestamp.fromDate(init),
       'userid': userid,
+      'groupid' : groupid,
     };
   }
 }

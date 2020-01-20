@@ -109,7 +109,7 @@ FutureOr inReserve(
           onPressed: () {
             List<DateTime> t =
                 timeOnDaySelected(initTime, finishTime, dayselected);
-            Event e = Event(userid, assetid, t[0], t[1]);
+            Event e = Event(userid, assetid, t[0], t[1], idgroup);
             bool valid = validationReserve(t, selectedEvents);
 
             if (valid == true) {

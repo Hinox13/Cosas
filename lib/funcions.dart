@@ -10,22 +10,10 @@ List<Event> docaEvent_list(List<DocumentSnapshot> doc) {
   for (var docu in doc) {
     eventid = docu.documentID;
     event_list.add(Event(docu.data['userid'], docu.data['assetid'],
-        docu.data['init'].toDate(), docu.data['end'].toDate(),
+        docu.data['init'].toDate(), docu.data['end'].toDate(), docu.data['groupid'],
         eventid: eventid));
   }
   return event_list;
-}
-
-////////  Un altre manera de pasar de Snapshots de Firebase a Classes EVENT /////////////////////////////
-
-List<Event> doc2Event(List<DocumentSnapshot> doc) {
-  List<Event> out = [];
-  for (var docs in doc) {
-    out.add(new Event(docs.data['userid'], docs.data['assetid'],
-        docs.data['init'].toDate(), docs.data['end'].toDate(),
-        eventid: docs.documentID));
-  }
-  return out;
 }
 
 ///
