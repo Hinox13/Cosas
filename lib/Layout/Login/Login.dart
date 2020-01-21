@@ -67,124 +67,126 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.all(30.0),
             child: Form(
               key: formKey,
-              child: Stack(
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      height: 400,
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black87,
-                                offset: Offset(10, 15),
-                                blurRadius: 30),
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            
-                            SizedBox(height: 20),
-                            Text(
-                              'Sign In',
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            SizedBox(height: 15),
-                            TextFormField(
-                              validator: (input) {
-                                if (input.isEmpty) {
-                                  return 'Please, type the required email';
-                                } else
-                                  return null;
-                              },
-                              onSaved: (input) => _email = input,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white30,
-                                filled: true,
-                                prefixIcon: Icon(Icons.person),
-                                labelText: 'E-mail',
-                                contentPadding:
-                                    EdgeInsets.only(left: 10, bottom: 15),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                labelStyle: TextStyle(),
+              child: Center(
+                              child: Stack(
+                  children: <Widget>[
+                   Container(
+                        height: 400,
+                        margin: EdgeInsets.only(top:50),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black87,
+                                  offset: Offset(10, 15),
+                                  blurRadius: 30),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              
+                              SizedBox(height: 20),
+                              Text(
+                                'Sign In',
+                                style: TextStyle(fontSize: 30),
                               ),
-                            ),
-                            SizedBox(height: 15),
-                            TextFormField(
-                              obscureText: true,
-                              validator: (input) {
-                                if (input.length < 6) {
-                                  return 'Please The password needs minimum 6 characters';
-                                } else
-                                  return null;
-                              },
-                              onSaved: (input) => _password = input,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white30,
-                                filled: true,
-                                prefixIcon: Icon(Icons.lock),
-                                labelText: 'Password',
-                                contentPadding:
-                                    EdgeInsets.only(left: 10, bottom: 15),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                labelStyle: TextStyle(),
+                              SizedBox(height: 15),
+                              TextFormField(
+                                validator: (input) {
+                                  if (input.isEmpty) {
+                                    return 'Please, type the required email';
+                                  } else
+                                    return null;
+                                },
+                                onSaved: (input) => _email = input,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white30,
+                                  filled: true,
+                                  prefixIcon: Icon(Icons.person),
+                                  labelText: 'E-mail',
+                                  contentPadding:
+                                      EdgeInsets.only(left: 10, bottom: 15),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  labelStyle: TextStyle(),
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 15),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: RaisedButton(
-                                    color: Colors.orange,
-                                    onPressed: signIn,
-                                    child: Text('Login',
-                                        style: TextStyle(color: Colors.white)),
-                                  ),
+                              SizedBox(height: 15),
+                              TextFormField(
+                                obscureText: true,
+                                validator: (input) {
+                                  if (input.length < 6) {
+                                    return 'Please The password needs minimum 6 characters';
+                                  } else
+                                    return null;
+                                },
+                                onSaved: (input) => _password = input,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white30,
+                                  filled: true,
+                                  prefixIcon: Icon(Icons.lock),
+                                  labelText: 'Password',
+                                  contentPadding:
+                                      EdgeInsets.only(left: 10, bottom: 15),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  labelStyle: TextStyle(),
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                                              child: RaisedButton(
-                                                              
-                                    onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => SignUpScreen()));
-                                    },
-                                    child: Text('Register'),
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: RaisedButton(
+                                      color: Colors.orange,
+                                      onPressed: signIn,
+                                      child: Text('Login',
+                                          style: TextStyle(color: Colors.white)),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                                                child: RaisedButton(
+                                                                
+                                      onPressed: () {
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => SignUpScreen()));
+                                      },
+                                      child: Text('Register'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    
+                    Positioned(
+                  
+                      left: 16.0,
+                      right: 16.0,
+                      child: Center(
+                        child: CircleAvatar(
+                         backgroundColor: Colors.orange,
+
+                          radius: 50,
+                          child: Container(
+                                  height: 75,
+                                  width: 75,
+                                  child: Image.asset('logo/logo.png')),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 90.0,
-                    left: .0,
-                    right: .0,
-                    child: Center(
-                      child: CircleAvatar(
-                       backgroundColor: Colors.orange,
-
-                        radius: 50.0,
-                        child: Container(
-                                height: 75,
-                                width: 75,
-                                child: Image.asset('logo/logo.png')),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
