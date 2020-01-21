@@ -20,16 +20,6 @@ class _Profile_ScreenState extends State<Profile_Screen> {
     super.initState();
   }
 
-  Future getnumber(String userid) async {
-    var respectsQuery = Firestore.instance
-        .collection('group')
-        .where('members', arrayContains: userid);
-    var querySnapshot = await respectsQuery.getDocuments();
-    var totalEquals = querySnapshot.documents.length;
-    print(totalEquals);
-    return totalEquals;
-  }
-
   FutureOr _changeName(BuildContext context, User actualuser) {
     return showDialog(
         context: context,
@@ -99,7 +89,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
   @override
   Widget build(BuildContext context) {
     String userid = this.widget.userid;
-    dynamic numbergroups = getnumber(userid);
+    dynamic numbergroups;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text('Profile')),
