@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RoomShare',
+      title: 'Comparte.me',
       color: Colors.white,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
